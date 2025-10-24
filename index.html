@@ -6,6 +6,7 @@
     <title>AMMAR&Brothers - Shop & Order via WhatsApp</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         /* CSS Variables for the Brand Colors */
@@ -14,6 +15,22 @@
             --secondary-blue: #87CEEB; /* Sky Blue for Background/Accents */
             --text-dark: #333333;
             --text-light: #FFFFFF;
+            --bg-color: #f8f8f8; /* Main Background Color */
+            --card-bg: var(--text-light); /* Product Card Background */
+            --header-bg: var(--text-light); /* Header Background */
+            --hero-text: var(--text-light);
+            --mobile-menu-bg: #FFFFFF; /* New variable for mobile menu background */
+        }
+
+        /* --- DARK MODE VARIABLES --- */
+        .dark-mode {
+            --text-dark: #f0f0f0;
+            --text-light: #1a1a1a;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --header-bg: #1e1e1e;
+            --hero-text: var(--text-dark); /* Ensure hero text is readable against a dark background */
+            --mobile-menu-bg: #1a1a1a; /* Dark mode mobile menu background */
         }
 
         /* Basic Reset & Typography */
@@ -22,8 +39,9 @@
             margin: 0;
             padding: 0;
             color: var(--text-dark);
-            background-color: #f8f8f8;
+            background-color: var(--bg-color); /* Use variable */
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
         }
 
         /* Utility Classes */
@@ -35,7 +53,7 @@
 
         /* --- Header & Navigation --- */
         header {
-            background-color: var(--text-light);
+            background-color: var(--header-bg); /* Use variable */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
@@ -46,7 +64,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0; /* Slightly reduced padding to make space for a larger logo */
+            padding: 10px 0;
         }
 
         .logo {
@@ -54,19 +72,46 @@
             font-weight: 700;
             color: var(--primary-orange);
             text-transform: uppercase;
-            display: flex; /* Added flex to align image and text if both are present */
+            display: flex;
             align-items: center;
         }
 
-        /* --- START NEW LOGO IMAGE CSS --- */
         .logo img {
-            height: 40px; /* Set logo height for a clear view */
+            height: 40px;
             width: auto;
             margin-right: 10px;
-            border-radius: 5px; /* Subtle rounding for the logo container */
+            border-radius: 5px;
             vertical-align: middle;
         }
-        /* --- END NEW LOGO IMAGE CSS --- */
+
+        /* Menu/Toggle Controls Container (Top Right) */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Hamburger Menu Icon */
+        .menu-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        /* Dark Mode Toggle Button Styling */
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4em;
+            color: var(--text-dark);
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            color: var(--secondary-blue);
+        }
 
         nav a {
             text-decoration: none;
@@ -79,14 +124,94 @@
         nav a:hover {
             color: var(--secondary-blue);
         }
+        
+        /* --- MODERN MOBILE NAVIGATION (Off-Canvas Style) --- */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            display: none;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%; /* Takes up 80% of screen width */
+            max-width: 300px;
+            height: 100%;
+            background-color: var(--mobile-menu-bg); /* Use new background variable */
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            padding-top: 60px; /* Space for the header content */
+            transform: translateX(100%); /* Start off-screen */
+            transition: transform 0.3s ease-out;
+            z-index: 1001; /* Above overlay */
+        }
+
+        .mobile-nav.open {
+            transform: translateX(0); /* Slide into view */
+        }
+        
+        /* Show overlay when menu is open */
+        .mobile-nav.open + .mobile-nav-overlay {
+            display: block;
+        }
+
+        .mobile-nav a {
+            padding: 15px 25px;
+            text-align: left;
+            width: 100%;
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.1em;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Separator line */
+            transition: background-color 0.2s;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--bg-color); /* Subtle hover effect */
+            color: var(--primary-orange);
+        }
+
+        /* Mobile Viewports */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            .menu-icon {
+                display: block;
+            }
+            .navbar {
+                flex-wrap: nowrap; /* Prevent logo and controls from wrapping */
+            }
+        }
+
+        /* Desktop Viewports */
+        @media (min-width: 769px) {
+            .menu-icon, .mobile-nav, .mobile-nav-overlay {
+                display: none !important;
+            }
+            nav {
+                display: block;
+            }
+        }
 
         /* --- Hero Section --- */
         #hero {
             background-color: var(--secondary-blue);
-            color: var(--text-light);
+            color: var(--hero-text); /* Use hero text variable for proper contrast */
             text-align: center;
             padding: 120px 0;
-            background-image: linear-gradient(135deg, var(--secondary-blue), #64b5f6); /* Subtle gradient */
+            background-image: linear-gradient(135deg, var(--secondary-blue), #64b5f6);
         }
 
         #hero h1 {
@@ -116,15 +241,16 @@
         }
 
         .cta-button:hover {
-            background-color: #e66a3d; /* Darker orange */
+            background-color: #e66a3d;
             transform: translateY(-2px);
         }
         
         /* --- Categories Section --- */
         #categories {
             padding: 40px 0;
-            background-color: var(--text-light);
+            background-color: var(--card-bg); /* Use card-bg for contrast with main BG */
             text-align: center;
+            transition: background-color 0.3s;
         }
 
         #categories h2 {
@@ -153,7 +279,7 @@
         }
 
         .category-item:hover {
-            background-color: #64b5f6; /* Lighter blue on hover */
+            background-color: #64b5f6;
             transform: translateY(-2px);
         }
         
@@ -161,7 +287,7 @@
         #products {
             padding: 60px 0;
             text-align: center;
-            min-height: 450px; /* Ensure content is visible before scroll */
+            min-height: 450px;
         }
 
         #products h2 {
@@ -177,12 +303,17 @@
         }
 
         .product-card {
-            background-color: var(--text-light);
+            background-color: var(--card-bg); /* Use card-bg variable */
             border-radius: 10px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
             padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
             text-align: left;
+        }
+        
+        /* Dark Mode adjustments for shadows and borders */
+        .dark-mode .product-card {
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.08);
         }
 
         .product-card:hover {
@@ -197,7 +328,6 @@
             border-radius: 8px;
             margin-bottom: 15px;
             background-color: #eee;
-            /* Make image clickable */
             cursor: pointer; 
         }
 
@@ -216,39 +346,45 @@
 
         /* --- Footer --- */
         footer {
-            background-color: var(--text-dark);
-            color: var(--text-light);
+            background-color: var(--text-dark); /* In dark mode, this will be #f0f0f0 */
+            color: var(--bg-color); /* In dark mode, this will be #121212 */
             text-align: center;
             padding: 30px 0;
             font-size: 0.9em;
+            transition: background-color 0.3s, color 0.3s;
         }
 
+        .dark-mode footer {
+            background-color: var(--text-dark); /* #f0f0f0 */
+            color: var(--bg-color); /* #121212 */
+        }
+        
         footer a {
             color: var(--secondary-blue);
             text-decoration: none;
             margin: 0 10px;
         }
 
-        /* --- START MODAL/LIGHTBOX CSS --- */
+        /* --- MODAL/LIGHTBOX CSS --- */
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
-            z-index: 200; /* Sit on top */
-            padding-top: 50px; /* Location of the box */
+            z-index: 2000; /* Sit on top of everything */
+            padding-top: 60px; /* Location of the box */
             left: 0;
             top: 0;
             width: 100%; /* Full width */
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
         }
-
+        
         .modal-content {
             margin: auto;
             display: block;
             width: 80%;
             max-width: 700px;
-            border-radius: 10px;
         }
 
         .modal-caption {
@@ -257,11 +393,11 @@
             width: 80%;
             max-width: 700px;
             text-align: center;
-            color: var(--text-light);
+            color: #ccc;
             padding: 10px 0;
             height: 150px;
         }
-
+        
         .modal-close {
             position: absolute;
             top: 15px;
@@ -270,7 +406,7 @@
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
-            cursor: pointer;
+            z-index: 2001;
         }
 
         .modal-close:hover,
@@ -279,10 +415,9 @@
             text-decoration: none;
             cursor: pointer;
         }
-        /* --- END MODAL/LIGHTBOX CSS --- */
     </style>
 </head>
-<body>
+<body class="light-mode">
 
     <header>
         <div class="container navbar">
@@ -290,21 +425,49 @@
                 <img src="https://uploads.onecompiler.io/433bkrhuh/442e7epue/ammar&brothers%20logo.jpg" alt="AMMAR&Brothers Logo">
                 AMMAR&Brothers
             </div>
-            <nav>
+            <nav id="full-nav">
+                <a href="#hero">Home</a>
+                <a href="#services">Services</a>
                 <a href="#categories">Categories</a>
                 <a href="#products">Shop</a>
                 <a href="#contact">Contact</a>
             </nav>
+            <div class="header-controls">
+                <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i> 
+                </button>
+                <div id="menu-icon" class="menu-icon">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
         </div>
     </header>
+
+    <div class="mobile-nav" id="mobile-menu">
+        <a href="#hero"><i class="fas fa-home"></i> Home</a>
+        <a href="#services"><i class="fas fa-tools"></i> Services</a>
+        <a href="#categories"><i class="fas fa-list"></i> Categories</a>
+        <a href="#products"><i class="fas fa-shopping-basket"></i> Shop</a>
+        <a href="#contact"><i class="fas fa-phone-alt"></i> Contact</a>
+    </div>
+    <div class="mobile-nav-overlay" id="mobile-overlay"></div>
 
     <section id="hero">
         <div class="container">
             <h1>Quality Products</h1>
             <p>Supplying Pakistan with top-quality electrical accessories: switches, breakers, lights. All kind of accessories are available. DM NOW!!!</p>
-            
         </div>
     </section>
+
+    <section id="services" style="padding: 60px 0; background-color: var(--bg-color); text-align: center;">
+        <div class="container" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+            <div class="service-card" style="flex: 1 1 300px; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background-color: var(--card-bg);">
+                <i class="fas fa-cogs" style="font-size: 2.5em; color: var(--secondary-blue); margin-bottom: 15px;"></i>
+                <h3 style="margin-top: 0; color: var(--text-dark);">Trust & Quality</h3>
+                <p style="color: var(--text-dark);">Quality Electrical Supplies. Genuine products guaranteed.</p>
+            </div>
+    </section>
+    <hr>
     
     <section id="categories">
         <div class="container">
@@ -317,7 +480,7 @@
                 <div class="category-item" data-category="LED Panels">LED Panels</div>
                 <div class="category-item" data-category="Wiring Cables">Wiring Cables</div>
             </div>
-            <p style="margin-top: 25px;">Click any category to view featured items!</p>
+            <p style="margin-top: 25px;">Click any category to view all items!</p>
         </div>
     </section>
 
@@ -325,26 +488,7 @@
         <div class="container">
             <h2>Featured Products</h2>
             <div class="product-grid">
-                
-                <div class="product-card">
-                    <img src="https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker.webp" alt="Schneider iC60N 2 Pole Miniature Circuit Breaker 6 KA">
-                    <h3>Schneider iC60N 2 Pole Miniature Circuit Breaker 6 KA</h3>
-                    <button class="whatsapp-order-btn cta-button" data-product="Schneider iC60N 2 Pole Miniature Circuit Breaker 6 KA">Inquire on WhatsApp</button>
                 </div>
-                
-                <div class="product-card">
-                    <img src="https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%20light.webp" alt="LED Lights">
-                    <h3>LED Lights</h3>
-                    <button class="whatsapp-order-btn cta-button" data-product="LED Lights">Inquire on WhatsApp</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/sockets.jpeg" alt="Wall Switches & Sockets">
-                    <h3>Wall Switches & Sockets</h3>
-                    <button class="whatsapp-order-btn cta-button" data-product="Wall Switches & Sockets">Inquire on WhatsApp</button>
-                </div>
-
-            </div>
             <div style="margin-top: 50px;">
                 <button id="shop-all-btn" class="cta-button">
                     View All Products
@@ -357,12 +501,12 @@
         <div class="container">
             <h3>Contact Us</h3>
             <p>
-                📞 **Call/WhatsApp:** <a href="tel:+923366577284">+92 336 6577284</a>
+                📞 Call/WhatsApp: <a href="tel:+923366577284">+92 336 6577284</a>
             </p>
             <p>
-                📧 **Email:** <a href="mailto:info@ammarandbrothers.com">info@ammarandbrothers.com</a>
+                📧 Email: <a href="mailto:info@ammarandbrothers.com">ammar.and.brothers.official.com</a>
             </p>
-            <p style="margin-top: 20px;">&copy; 2025 **AMMAR&Brothers**. All rights reserved.</p>
+            <p style="margin-top: 20px;">&copy; 2025 AMMAR&Brothers. All rights reserved.</p>
             <p><a href="#">Privacy Policy</a> | <a href="#">Shipping</a></p>
         </div>
     </footer>
@@ -373,59 +517,74 @@
         <div id="caption" class="modal-caption"></div>
     </div>
     <script>
-        // **IMPORTANT: WhatsApp Business number is set here**
-        const WHATSAPP_NUMBER = "923366577284"; 
-        
+        // *IMPORTANT: WhatsApp Business number is set here*
+        const WHATSAPP_NUMBER = "923366577284";
+
         // Data structure to hold featured products for each category
-        // --- UPDATED CATEGORY_PRODUCTS WITH ALL IMAGE URLS ---
         const CATEGORY_PRODUCTS = {
             "Ceiling Fans": [
-                { 
-                    name: "Royal Platinum Ceiling Fan", 
-                    imageText: "Royal+Fan", 
-                    color: 'FF7F50', 
-                    imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%201.jpeg"
-                },
-                { 
-                    name: "Royal Ceiling Fan (White)", 
-                    imageText: "Ceiling+Fan+Eco", 
-                    color: '87CEEB',
-                    imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans2.webp" 
-                },
-                { 
-                    name: "iTurbo 30 Watts DC Fan", 
-                    imageText: "Ceiling+Fan+Fancy", 
-                    color: 'FF7F50',
-                    imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%203.webp"
-                }
+                { name: "Royal Platinum Ceiling Fan", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%201.jpeg" },
+                { name: "Royal Ceiling Fan (White)", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans2.webp" },
+                { name: "iTurbo 30 Watts DC Fan", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%203.webp" },
+                { name: "Bracket Fan GFC", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/bracet%20fan.webp" },
+                { name: "Mini Exhaust Fan (Bathroom)", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/Plasticround.webp" },
+                { name: "Industrial Pedestal Fan", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/pedistal%20fans.webp" }
             ],
             "Fancy Lights": [
-                { name: "Wall lights", imageText: "Chandelier+Modern", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lights.jpg" },
-                { name: "Decorative wall lamp", imageText: "Wall+Sconce", color: 'FF7F50', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lighbt2.jpg" },
-                { name: "Hanging Lights", imageText: "Pendant+Light", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/light%203.jpg" }
+                { name: "Wall lights", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lights.jpg" },
+                { name: "Decorative wall lamp", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lighbt2.jpg" },
+                { name: "Hanging Lights", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/light%203.jpg" },
+                { name: "wall lamps fancy", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.06.05_df5ac500.jpg" },
+                { name: "Modern Track Lighting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/track_20w_8.webp" },
+                { name: "Outdoor LED Garden Spike", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsAppImage2023-08-20at23.08.39.webp" }
             ],
             "Switches & Sockets": [
-                { name: "Schneider fitting", imageText: "Modular+Switch", color: 'FF7F50', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss1.jpg" },
-                { name: "Matrix fitting", imageText: "Power+Socket", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss2.jpg" },
-                { name: "ZEC fitting", imageText: "Dimmer+Switch", color: 'FF7F50', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss3.jpg" }
+                { name: "Schneider fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss1.jpg" },
+                { name: "Matrix fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss2.jpg" },
+                { name: "ECM Fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss3.jpg" },
+                { name: "ZEC Fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.14_e7b3301b.jpg" },
+                { name: "Bush fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.15_52d2c24f.jpg" },
+                { name: "china fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.15_dfbce7b7.jpg" }
             ],
             "Circuit Breakers": [
-                { name: "Single Pole Breaker", imageText: "Breaker+Single+Pole", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker%202.webp" },
-                { name: "Double Pole Main Breaker", imageText: "Breaker+Main", color: 'FF7F50', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker.webp" },
-                { name: "Miniature Circuit Breaker", imageText: "MCB", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker.webp" }
+                { name: "Single Pole Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker%202.webp" },
+                { name: "Double Pole Main Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker.webp" },
+                { name: "Miniature Circuit Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker.webp" },
+                { name: "RCCB Residual Current Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/moulded-case-circuit-breakers-mccb--500x500.webp" },
+                { name: "Moulded Case Circuit Breaker (MCCB)", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images.jpeg" },
+                { name: "3-Pole Industrial Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/A9F44302.jpeg" }
             ],
             "LED Panels": [
-                { name: "Square Recessed Panel", imageText: "LED+Panel+Square", color: 'FF7F50', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%20light.webp" },
-                { name: "Round Surface Mount LED", imageText: "LED+Panel+Round", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%202.jpeg" },
-                { name: "Warm White LED Strip", imageText: "LED+Strip", color: 'FF7F50', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%2044.jpg" }
+                { name: "Square Recessed Panel", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%20light.webp" },
+                { name: "Round Surface Mount LED", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%202.jpeg" },
+                { name: "Warm White LED Strip", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%2044.jpg" },
+                { name: "Square led panel", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(1).jpeg" },
+                { name: "Outdoor lights led", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(2).jpeg" },
+                { name: "Solar lights", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(3).jpeg" }
             ],
             "Wiring Cables": [
-                { name: "All type of GM Cables", imageText: "Copper+Wire+1.5mm", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/gm%20cable%20list.jpeg" },
-                { name: "PAKISTAN CABLE", imageText: "Earthing+Cable", color: 'FF7F50', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/pak%20cble33.png" },
-                { name: "Fast Cable", imageText: "Heavy+Duty+Cable", color: '87CEEB', imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fast%20cble%2033.jpg" }
+                { name: "All type of GM Cables", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/gm%20cable%20list.jpeg" },
+                { name: "PAKISTAN CABLE", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/pak%20cble33.png" },
+                { name: "Fast Cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fast%20cble%2033.jpg" },
+                { name: "TV cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/58a6600b9c7f36e46ceacccb79e30315.png" },
+                { name: "Newage cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(4).jpeg" },
+                { name: "CCTV cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(5).jpeg" }
             ]
         };
-        // --- END UPDATED CATEGORY_PRODUCTS ---
+
+        // Combine all products into a single array (for the 'View All' feature)
+        const ALL_PRODUCTS = Object.values(CATEGORY_PRODUCTS).flat();
+
+        // Get DOM Elements
+        const productGrid = document.querySelector('.product-grid');
+        const productsHeading = document.querySelector('#products h2');
+        const shopAllBtn = document.getElementById('shop-all-btn');
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+
+        // --- Core Functions ---
 
         // Function to generate and open the WhatsApp link
         const openWhatsAppOrder = (productDetails) => {
@@ -435,107 +594,175 @@
             window.open(whatsappURL, '_blank');
         };
 
-        // Function to display featured products for a selected category
+        // Function to render a single product card
+        const createProductCard = (product) => {
+            const card = document.createElement('div');
+            card.classList.add('product-card');
+
+            card.innerHTML = `
+                <img src="${product.imageUrl}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <button class="whatsapp-order-btn cta-button" data-product="${product.name}">Inquire on WhatsApp</button>
+            `;
+
+            // Attach event listeners to the new card's elements
+            card.querySelector('.whatsapp-order-btn').addEventListener('click', (event) => {
+                const productDetails = event.target.getAttribute('data-product');
+                openWhatsAppOrder(productDetails);
+            });
+            card.querySelector('img').addEventListener('click', handleImageClick);
+
+            return card;
+        }
+
+        // Function to display ALL products in the selected category
         const showCategoryProducts = (categoryName) => {
             const products = CATEGORY_PRODUCTS[categoryName];
             if (!products) return;
 
-            document.querySelector('#products h2').textContent = `Featured Products in ${categoryName}`;
-            const productCards = document.querySelectorAll('.product-card');
-            
-            productCards.forEach((card, index) => {
-                const product = products[index];
-                if (product) {
-                    card.querySelector('h3').textContent = product.name;
-                    
-                    const img = card.querySelector('img');
-                    
-                    // Use specific image URL if available, otherwise use placeholder
-                    if (product.imageUrl) {
-                        img.src = product.imageUrl;
-                    } else {
-                        const color1 = product.color; 
-                        const color2 = 'FFFFFF';
-                        img.src = `https://via.placeholder.com/300x200/${color1}/${color2}?text=${product.imageText}`;
-                    }
-                    
-                    img.alt = product.name;
-                    card.querySelector('.whatsapp-order-btn').setAttribute('data-product', product.name);
-                }
+            productsHeading.textContent = `All Products in ${categoryName} (${products.length} Items)`;
+            productGrid.innerHTML = ''; // Clear existing products
+
+            // Renders ALL products in the category
+            products.forEach(product => {
+                productGrid.appendChild(createProductCard(product));
             });
 
-            document.getElementById('shop-all-btn').textContent = `View All ${categoryName}`;
+            // Ensure the 'View All Products' button is visible to allow returning to the main list
+            shopAllBtn.textContent = `View All Products`;
+            shopAllBtn.style.display = 'block';
+
             document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
 
+        // Function: Show all available products
+        const showAllProducts = () => {
+            productsHeading.textContent = `⚡ Our Complete Product Range (${ALL_PRODUCTS.length} Items)`;
+            productGrid.innerHTML = ''; // Clear existing products
 
-        // --- MODAL FUNCTIONALITY ---
+            ALL_PRODUCTS.forEach(product => {
+                productGrid.appendChild(createProductCard(product));
+            });
+
+            // Hide the "View All Products" button once all are shown
+            shopAllBtn.style.display = 'none';
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Function to handle the initial page load state
+        const displayInitialProducts = () => {
+            // Display all products on initial load
+            showAllProducts();
+        }
+
+
+        // --- UI/Utility Functions ---
+
+        // MODAL/LIGHTBOX FUNCTIONALITY
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("img01");
         const captionText = document.getElementById("caption");
-
         const span = document.getElementsByClassName("modal-close")[0];
-        
-        span.onclick = function() { 
+
+        span.onclick = function() {
             modal.style.display = "none";
         }
-        
+
         modal.onclick = function(event) {
             if (event.target === modal) {
                 modal.style.display = "none";
             }
         }
-        
-        const setupImageClickListeners = () => {
-            // It's important to re-attach listeners after content changes!
-            document.querySelectorAll('.product-card img').forEach(img => {
-                img.removeEventListener('click', handleImageClick);
-                img.addEventListener('click', handleImageClick);
-            });
-        };
 
         const handleImageClick = (event) => {
             modal.style.display = "block";
-            // Use the small image URL to populate the large modal image
-            modalImg.src = event.target.src; 
+            modalImg.src = event.target.src;
             captionText.innerHTML = event.target.alt;
         };
-        // --- END MODAL FUNCTIONALITY ---
 
+        // DARK MODE TOGGLE FUNCTIONALITY
+        const toggleDarkMode = () => {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
 
-        document.addEventListener('DOMContentLoaded', () => {
+            const icon = darkModeToggle.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        };
 
-            // 1. Initial setup for image click listeners (for the default products)
-            setupImageClickListeners();
+        // MOBILE MENU TOGGLE FUNCTIONALITY
+        const toggleMobileMenu = () => {
+            const isOpen = mobileMenu.classList.toggle('open');
 
-            // 2. Individual Product Order Buttons
-            const productOrderButtons = document.querySelectorAll('.whatsapp-order-btn');
-            productOrderButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const productDetails = event.target.getAttribute('data-product');
-                    openWhatsAppOrder(productDetails);
-                });
-            });
+            // Toggle the overlay
+            mobileOverlay.style.display = isOpen ? 'block' : 'none';
 
-            // 3. Category List Items
-            const categoryItems = document.querySelectorAll('.category-item');
-            categoryItems.forEach(item => {
+            // Change the icon (X or Bars)
+            const icon = menuIcon.querySelector('i');
+            if (isOpen) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        };
+
+        // --- Setup and Event Listeners ---
+
+        const setupInitialListeners = () => {
+            // 1. Category List Items
+            document.querySelectorAll('.category-item').forEach(item => {
                 item.addEventListener('click', (event) => {
                     const categoryName = event.target.getAttribute('data-category');
-                    showCategoryProducts(categoryName); 
-                    // CRITICAL: Re-set image click listeners after products are updated
-                    setupImageClickListeners(); 
+                    showCategoryProducts(categoryName);
+                    // Close the mobile menu if active
+                    if (mobileMenu.classList.contains('open')) {
+                        toggleMobileMenu(); 
+                    }
                 });
             });
 
-            // 4. Shop All/View All Button (Action)
-            const shopAllBtn = document.getElementById('shop-all-btn');
+            // 2. Shop All/View All Button
             if (shopAllBtn) {
-                shopAllBtn.addEventListener('click', () => {
-                    alert("Thank you! For our full catalog, including all switches, breakers, and lights, please contact us directly on WhatsApp to get the best deals!");
-                });
+                shopAllBtn.addEventListener('click', showAllProducts);
             }
-        });
+
+            // 3. Dark Mode Toggle & Initial Check
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', toggleDarkMode);
+                // Check for saved theme preference
+                if (localStorage.getItem('theme') === 'dark') {
+                    toggleDarkMode();
+                }
+            }
+
+            // 4. Mobile Menu Toggle
+            if (menuIcon) {
+                menuIcon.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // 5. Mobile Menu Overlay/Links (closes menu when clicked)
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', toggleMobileMenu);
+            }
+            document.querySelectorAll('.mobile-nav a').forEach(link => {
+                 link.addEventListener('click', toggleMobileMenu);
+            });
+
+            // 6. Initial Product Display
+            displayInitialProducts();
+        };
+
+        // Execute setup function when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', setupInitialListeners);
     </script>
 </body>
 </html>
