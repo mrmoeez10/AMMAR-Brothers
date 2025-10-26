@@ -2,402 +2,312 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMMAR&Brothers - Shop & Order via WhatsApp</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>AMMAR & Brothers - Quality Electronics Catalog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
     <style>
-        /* CSS Variables for the Brand Colors */
-        :root {
-            --primary-orange: #FF7F50; /* Vibrant Orange for CTAs */
-            --secondary-blue: #87CEEB; /* Sky Blue for Background/Accents */
-            --text-dark: #333333;
-            --text-light: #FFFFFF;
-            --bg-color: #f8f8f8; /* Main Background Color */
-            --card-bg: var(--text-light); /* Product Card Background */
-            --header-bg: var(--text-light); /* Header Background */
-            --hero-text: var(--text-light);
-            --mobile-menu-bg: #FFFFFF; /* New variable for mobile menu background */
-        }
-
-        /* --- DARK MODE VARIABLES --- */
-        .dark-mode {
-            --text-dark: #f0f0f0;
-            --text-light: #1a1a1a;
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --header-bg: #1e1e1e;
-            --hero-text: var(--text-dark); /* Ensure hero text is readable against a dark background */
-            --mobile-menu-bg: #1a1a1a; /* Dark mode mobile menu background */
-        }
-
-        /* Basic Reset & Typography */
-        body {
-            font-family: 'Poppins', sans-serif;
+        /* ==================================== */
+        /* BASE STYLES (MOBILE-FIRST) */
+        /* ==================================== */
+        
+        * {
             margin: 0;
             padding: 0;
-            color: var(--text-dark);
-            background-color: var(--bg-color); /* Use variable */
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
             line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
         }
 
-        /* Utility Classes */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* --- Header & Navigation --- */
-        header {
-            background-color: var(--header-bg); /* Use variable */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar {
+        /* Header & Navigation */
+        .main-header {
+            background-color: #ffffff;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap; 
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            height: 30px; 
+            margin-right: 8px;
         }
 
         .logo {
-            font-size: 1.6em;
-            font-weight: 700;
-            color: var(--primary-orange);
-            text-transform: uppercase;
+            font-size: 1.4em; 
+            font-weight: bold;
+            color: #173f5f; 
+        }
+
+        .main-header nav {
+            order: 3; 
+            width: 100%;
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            margin-top: 10px;
             display: flex;
-            align-items: center;
+            justify-content: space-around;
         }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            margin-right: 10px;
-            border-radius: 5px;
-            vertical-align: middle;
-        }
-
-        /* Menu/Toggle Controls Container (Top Right) */
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        /* Hamburger Menu Icon */
-        .menu-icon {
-            font-size: 1.5em;
-            cursor: pointer;
-            color: var(--text-dark);
-        }
-
-        /* Dark Mode Toggle Button Styling */
-        .dark-mode-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.4em;
-            color: var(--text-dark);
-            padding: 5px;
+        
+        .main-header nav a {
+            text-decoration: none;
+            color: #555;
+            margin: 0 5px; 
+            font-size: 0.9em;
+            padding: 5px 0;
             transition: color 0.3s;
         }
 
-        .dark-mode-toggle:hover {
-            color: var(--secondary-blue);
+        .header-icons {
+            margin-left: auto; 
         }
 
-        nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            margin-left: 25px;
-            font-weight: 600;
-            transition: color 0.3s ease;
+        .header-icons i {
+            font-size: 1.1em; 
+            margin-left: 15px;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.3s;
         }
 
-        nav a:hover {
-            color: var(--secondary-blue);
+        #cart-count {
+            background-color: #fc5130; 
+            color: white;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-size: 0.7em;
+            position: relative;
+            top: -10px;
+            left: -5px;
         }
         
-        /* --- MODERN MOBILE NAVIGATION (Off-Canvas Style) --- */
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            display: none;
-        }
-
-        .mobile-nav {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 80%; /* Takes up 80% of screen width */
-            max-width: 300px;
-            height: 100%;
-            background-color: var(--mobile-menu-bg); /* Use new background variable */
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        /* Main Layout - Single Column for Mobile */
+        .container {
             display: flex;
-            flex-direction: column;
-            padding-top: 60px; /* Space for the header content */
-            transform: translateX(100%); /* Start off-screen */
-            transition: transform 0.3s ease-out;
-            z-index: 1001; /* Above overlay */
+            flex-direction: column; 
+            max-width: 1400px;
+            margin: 10px auto;
+            padding: 0 10px; 
         }
 
-        .mobile-nav.open {
-            transform: translateX(0); /* Slide into view */
-        }
-        
-        /* Show overlay when menu is open */
-        .mobile-nav.open + .mobile-nav-overlay {
-            display: block;
-        }
-
-        .mobile-nav a {
-            padding: 15px 25px;
-            text-align: left;
+        /* Sidebar (Categories) - Full width on mobile */
+        .sidebar {
             width: 100%;
-            margin: 0;
-            color: var(--text-dark);
-            font-size: 1.1em;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Separator line */
-            transition: background-color 0.2s;
-            box-sizing: border-box;
-            text-decoration: none;
-        }
-
-        .mobile-nav a:hover {
-            background-color: var(--bg-color); /* Subtle hover effect */
-            color: var(--primary-orange);
-        }
-
-        /* Mobile Viewports */
-        @media (max-width: 768px) {
-            nav {
-                display: none;
-            }
-            .menu-icon {
-                display: block;
-            }
-            .navbar {
-                flex-wrap: nowrap; /* Prevent logo and controls from wrapping */
-            }
-        }
-
-        /* Desktop Viewports */
-        @media (min-width: 769px) {
-            .menu-icon, .mobile-nav, .mobile-nav-overlay {
-                display: none !important;
-            }
-            nav {
-                display: block;
-            }
-        }
-
-        /* --- Hero Section --- */
-        #hero {
-            background-color: var(--secondary-blue);
-            color: var(--hero-text); /* Use hero text variable for proper contrast */
-            text-align: center;
-            padding: 120px 0;
-            background-image: linear-gradient(135deg, var(--secondary-blue), #64b5f6);
-        }
-
-        #hero h1 {
-            font-size: 2.8em;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        #hero p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-        
-        /* Global Call to Action Button Style */
-        .cta-button {
-            background-color: var(--primary-orange);
-            color: var(--text-light);
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.1em;
-            font-weight: 600;
+            padding: 15px;
+            background: #fff;
             border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s;
-            text-transform: uppercase;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
         }
 
-        .cta-button:hover {
-            background-color: #e66a3d;
-            transform: translateY(-2px);
+        .sidebar h2 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
         }
-        
-        /* --- Categories Section --- */
-        #categories {
-            padding: 40px 0;
-            background-color: var(--card-bg); /* Use card-bg for contrast with main BG */
+
+        #category-list {
+            list-style: none;
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 5px;
+        }
+
+        #category-list li {
+            padding: 5px 10px;
+            font-size: 0.9em;
+            flex-grow: 1; 
             text-align: center;
-            transition: background-color 0.3s;
-        }
-
-        #categories h2 {
-            font-size: 2em;
-            margin-bottom: 25px;
-            color: var(--secondary-blue);
-        }
-
-        .category-list {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .category-item {
-            background-color: var(--secondary-blue);
-            color: var(--text-light);
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: 600;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, transform 0.2s;
             cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            border-radius: 4px;
         }
 
-        .category-item:hover {
-            background-color: #64b5f6;
-            transform: translateY(-2px);
-        }
-        
-        /* --- Products Section --- */
-        #products {
-            padding: 60px 0;
-            text-align: center;
-            min-height: 450px;
+        #category-list li:hover, #category-list li.active {
+            background-color: #173f5f; 
+            color: white;
         }
 
-        #products h2 {
-            font-size: 2em;
-            margin-bottom: 40px;
-            color: var(--primary-orange);
-        }
-
+        /* Product Grid - Single Column for smaller screens */
         .product-grid {
+            flex-grow: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr; 
+            gap: 15px;
         }
 
+        /* Product Card */
         .product-card {
-            background-color: var(--card-bg); /* Use card-bg variable */
-            border-radius: 10px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
-            text-align: left;
+            background-color: #fff;
+            overflow: hidden;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; 
         }
         
-        /* Dark Mode adjustments for shadows and borders */
-        .dark-mode .product-card {
-            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.08);
-        }
-
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .product-card img {
+        /* Image Container and Primary Image */
+        .image-container {
+            position: relative;
             width: 100%;
-            height: 200px;
+            height: 180px; 
+            overflow: hidden;
+            touch-action: pan-y; /* Allows vertical scrolling while allowing horizontal swiping to be captured */
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background-color: #eee;
-            cursor: pointer; 
-        }
-
-        .product-card h3 {
-            font-size: 1.3em;
-            margin: 0 0 15px 0;
-            color: var(--secondary-blue);
+            display: block;
+            cursor: grab; 
+            transition: opacity 0.3s;
         }
         
-        .whatsapp-order-btn {
-            width: 100%;
-            background-color: var(--primary-orange);
-            padding: 10px 0;
+        /* Image Thumbnails/Selectors */
+        .image-selectors {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            pointer-events: all; 
+        }
+
+        .selector-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .selector-dot.active {
+            background-color: #173f5f;
+            transform: scale(1.2);
+        }
+
+
+        /* Product Info */
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            height: 40px; 
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn {
+            background-color: #3caea3; 
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 1em;
+            transition: background-color 0.3s;
+            width: 100%;
         }
 
-        /* --- Footer --- */
-        footer {
-            background-color: var(--text-dark); /* In dark mode, this will be #f0f0f0 */
-            color: var(--bg-color); /* In dark mode, this will be #121212 */
-            text-align: center;
-            padding: 30px 0;
-            font-size: 0.9em;
-            transition: background-color 0.3s, color 0.3s;
+        .add-to-cart-btn:hover {
+            background-color: #2b847b;
         }
 
-        .dark-mode footer {
-            background-color: var(--text-dark); /* #f0f0f0 */
-            color: var(--bg-color); /* #121212 */
-        }
-        
-        footer a {
-            color: var(--secondary-blue);
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-        /* --- MODAL/LIGHTBOX CSS --- */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 2000; /* Sit on top of everything */
-            padding-top: 60px; /* Location of the box */
+        /* FULL IMAGE MODAL STYLES (Lightbox) */
+        #image-modal {
+            display: none; 
+            position: fixed;
+            z-index: 2000; 
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-        }
-        
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            padding: 20px; 
         }
 
-        .modal-caption {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: 150px;
+        .modal-content-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            max-width: 900px; 
+            max-height: 90vh;
         }
-        
+
+        #modal-content {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: default; 
+        }
+
+        /* Modal Navigation Arrows */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3em;
+            color: #ccc;
+            cursor: pointer;
+            padding: 10px;
+            transition: color 0.3s;
+            user-select: none;
+            z-index: 2010;
+        }
+
+        .modal-nav:hover {
+            color: white;
+        }
+
+        #modal-prev {
+            left: 10px;
+        }
+
+        #modal-next {
+            right: 10px;
+        }
+
+        /* Modal Close Button */
         .modal-close {
             position: absolute;
             top: 15px;
@@ -406,363 +316,715 @@
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
-            z-index: 2001;
+            cursor: pointer;
+            z-index: 2020;
         }
 
         .modal-close:hover,
         .modal-close:focus {
-            color: var(--primary-orange);
+            color: #bbb;
             text-decoration: none;
             cursor: pointer;
         }
+        
+        /* Overlay & Cart Sidebar Styles */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 10vh;
+        }
+
+        .overlay.active {
+            display: flex;
+        }
+        
+        .search-content {
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-content input {
+            width: 100%;
+            padding: 15px 60px 15px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .close-btn {
+            font-size: 2em;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.2s;
+        }
+
+        .search-content .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none; 
+        }
+
+        .cart-overlay.active {
+            display: block;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: #fff;
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.4s ease-out;
+            display: flex;
+            flex-direction: column;
+            width: 90%; 
+            max-width: 350px;
+        }
+
+        .cart-overlay.active .cart-sidebar {
+            transform: translateX(0);
+        }
+        
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .remove-item-btn {
+            background: none;
+            border: 1px solid #fc5130;
+            color: #fc5130;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        
+        .empty-cart-message {
+            text-align: center; 
+            width: 100%; 
+            padding: 50px 0; 
+            font-size: 1.1em; 
+            color: #fc5130;
+        }
+
+        .order-whatsapp-btn {
+            background-color: #25d366;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .order-whatsapp-btn:hover {
+            background-color: #128c7e;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        /* ==================================== */
+        /* TABLET VIEW (481px and up) */
+        /* ==================================== */
+        @media (min-width: 481px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        /* ==================================== */
+        /* LAPTOP/PC VIEW (992px and up) */
+        /* ==================================== */
+        @media (min-width: 992px) {
+            .main-header nav {
+                order: 0; 
+                width: auto;
+                border-top: none;
+                margin-top: 0;
+                padding-top: 0;
+            }
+
+            .container {
+                flex-direction: row; 
+                margin: 20px auto;
+                padding: 0 20px;
+            }
+
+            .sidebar {
+                width: 250px; 
+                margin-right: 20px;
+                margin-bottom: 0;
+            }
+            
+            .sidebar h2 {
+                text-align: left;
+            }
+
+            #category-list {
+                flex-direction: column; 
+                gap: 0;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
     </style>
 </head>
-<body class="light-mode">
+<body id="top">
 
-    <header>
-        <div class="container navbar">
-            <div class="logo">
-                <img src="https://uploads.onecompiler.io/433bkrhuh/442e7epue/ammar&brothers%20logo.jpg" alt="AMMAR&Brothers Logo">
-                AMMAR&Brothers
-            </div>
-            <nav id="full-nav">
-                <a href="#hero">Home</a>
-                <a href="#services">Services</a>
-                <a href="#categories">Categories</a>
-                <a href="#products">Shop</a>
-                <a href="#contact">Contact</a>
-            </nav>
-            <div class="header-controls">
-                <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle Dark Mode">
-                    <i class="fas fa-moon"></i> 
-                </button>
-                <div id="menu-icon" class="menu-icon">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="https://uploads.onecompiler.io/433bkrhuh/442e7epue/ammar&brothers%20logo.jpg" alt="Company Logo" class="logo-img">
+            <div class="logo">AMMAR & Brothers</div>
+        </div>
+        
+        <nav>
+            <a href="#top">Home</a>
+            <a href="#shop-section">Shop</a>
+            <a href="#about-section">About</a>
+            <a href="#contact-footer">Contact</a>
+        </nav>
+        <div class="header-icons">
+            <i class="fas fa-search" id="search-icon"></i> 
+            <i class="fas fa-shopping-cart" id="cart-icon"></i>
+            <span id="cart-count">0</span>
         </div>
     </header>
 
-    <div class="mobile-nav" id="mobile-menu">
-        <a href="#hero"><i class="fas fa-home"></i> Home</a>
-        <a href="#services"><i class="fas fa-tools"></i> Services</a>
-        <a href="#categories"><i class="fas fa-list"></i> Categories</a>
-        <a href="#products"><i class="fas fa-shopping-basket"></i> Shop</a>
-        <a href="#contact"><i class="fas fa-phone-alt"></i> Contact</a>
+    <div id="image-modal" style="display: none;">
+        <span class="modal-close" id="close-image-modal">&times;</span>
+        <div class="modal-content-wrapper" id="modal-content-wrapper">
+            <i class="modal-nav fas fa-chevron-left" id="modal-prev"></i>
+            <img class="modal-content" id="modal-content" src="">
+            <i class="modal-nav fas fa-chevron-right" id="modal-next"></i>
+        </div>
     </div>
-    <div class="mobile-nav-overlay" id="mobile-overlay"></div>
 
-    <section id="hero">
-        <div class="container">
-            <h1>Quality Products</h1>
-            <p>Supplying Pakistan with top-quality electrical accessories: switches, breakers, lights. All kind of accessories are available. DM NOW!!!</p>
+    <div class="overlay" id="search-overlay">
+        <div class="search-content">
+            <input type="text" placeholder="Search products, brands, and categories..." id="search-input">
+            <span class="close-btn" data-target="search-overlay">&times;</span>
         </div>
-    </section>
-
-    <section id="services" style="padding: 60px 0; background-color: var(--bg-color); text-align: center;">
-        <div class="container" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-            <div class="service-card" style="flex: 1 1 300px; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); background-color: var(--card-bg);">
-                <i class="fas fa-cogs" style="font-size: 2.5em; color: var(--secondary-blue); margin-bottom: 15px;"></i>
-                <h3 style="margin-top: 0; color: var(--text-dark);">Trust & Quality</h3>
-                <p style="color: var(--text-dark);">Quality Electrical Supplies. Genuine products guaranteed.</p>
-            </div>
-    </section>
-    <hr>
+    </div>
     
-    <section id="categories">
-        <div class="container">
-            <h2>Explore Our Top Categories</h2>
-            <div class="category-list">
-                <div class="category-item" data-category="Ceiling Fans">Ceiling Fans</div>
-                <div class="category-item" data-category="Fancy Lights">Fancy Lights</div>
-                <div class="category-item" data-category="Switches & Sockets">Switches & Sockets</div>
-                <div class="category-item" data-category="Circuit Breakers">Circuit Breakers</div>
-                <div class="category-item" data-category="LED Panels">LED Panels</div>
-                <div class="category-item" data-category="Wiring Cables">Wiring Cables</div>
-            </div>
-            <p style="margin-top: 25px;">Click any category to view all items!</p>
-        </div>
-    </section>
+    <main class="container" id="shop-section"> 
+        <aside class="sidebar">
+            <h2>Product Categories</h2>
+            <ul id="category-list">
+                <li class="active" data-category="all">All Electricals</li>
+                <li data-category="fancy-lights">Fancy Lights</li>
+                <li data-category="switches-sockets">Switches & Sockets</li>
+                <li data-category="breakers">Breakers</li>
+                <li data-category="outdoor-lights">Outdoor Lights</li>
+                <li data-category="wiring-cables">Wiring Cables</li>
+                <li data-category="ceiling-fans">Ceiling Fans</li>
+            </ul>
+        </aside>
 
-    <section id="products">
-        <div class="container">
-            <h2>Featured Products</h2>
-            <div class="product-grid">
+        <section class="product-grid" id="product-grid">
+        </section>
+
+        <div class="cart-overlay" id="cart-overlay">
+            <div class="cart-sidebar">
+                <h2>Your Order List <span class="close-btn" id="close-cart">&times;</span></h2>
+                <div id="cart-items" class="cart-items">
+                    <p class="empty-cart-message">Your list is empty. Add items to request a quote/order.</p>
                 </div>
-            <div style="margin-top: 50px;">
-                <button id="shop-all-btn" class="cta-button">
-                    View All Products
-                </button>
+                <div class="cart-footer">
+                    <div class="total">Pricing will be confirmed upon order.</div> 
+                    <button class="order-whatsapp-btn" id="order-whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                    </button>
+                </div>
             </div>
+        </div>
+
+    </main>
+    
+    <section id="about-section">
+        <div class="container" style="flex-direction: column; margin-top: 0;">
+            <h2>About AMMAR & Brothers</h2>
+            <p style="margin-top: 15px;">Established in 2025, AMMAR & Brothers is committed to providing high-quality, reliable, and energy-efficient electrical Products. We aim to be your trusted partner for home improvement and professional projects, offering everything from heavy-duty power tools to smart home lighting solutions.</p>
         </div>
     </section>
 
-    <footer id="contact">
-        <div class="container">
-            <h3>Contact Us</h3>
-            <p>
-                📞 Call/WhatsApp: <a href="tel:+923366577284">+92 336 6577284</a>
-            </p>
-            <p>
-                📧 Email: <a href="mailto:info@ammarandbrothers.com">ammar.and.brothers.official.com</a>
-            </p>
-            <p style="margin-top: 20px;">&copy; 2025 AMMAR&Brothers. All rights reserved.</p>
-            <p><a href="#">Privacy Policy</a> | <a href="#">Shipping</a></p>
-        </div>
+    <footer class="main-footer" id="contact-footer">
+        <p>Contact us: info@ammarbrothers.com | Phone: +92 33 66577284</p>
+        <p>&copy; 2025 AMMAR & Brothers. All rights reserved.</p>
     </footer>
 
-    <div id="imageModal" class="modal">
-        <span class="modal-close">&times;</span>
-        <img class="modal-content" id="img01">
-        <div id="caption" class="modal-caption"></div>
-    </div>
     <script>
-        // *IMPORTANT: WhatsApp Business number is set here*
-        const WHATSAPP_NUMBER = "923366577284";
+        // --- GLOBAL VARIABLES & DATA ---
+        const WHATSAPP_NUMBER = "12345678900";
+        const productGrid = document.getElementById('product-grid');
+        const imageModal = document.getElementById('image-modal');
+        const modalContent = document.getElementById('modal-content');
+        const closeImageModalBtn = document.getElementById('close-image-modal');
+        const modalPrevBtn = document.getElementById('modal-prev');
+        const modalNextBtn = document.getElementById('modal-next');
+        const categoryList = document.getElementById('category-list');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartCountSpan = document.getElementById('cart-count');
+        const searchInput = document.getElementById('search-input');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const emptyCartMessage = document.querySelector('.empty-cart-message');
 
-        // Data structure to hold featured products for each category
-        const CATEGORY_PRODUCTS = {
-            "Ceiling Fans": [
-                { name: "Royal Platinum Ceiling Fan", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%201.jpeg" },
-                { name: "Royal Ceiling Fan (White)", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans2.webp" },
-                { name: "iTurbo 30 Watts DC Fan", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%203.webp" },
-                { name: "Bracket Fan GFC", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/bracet%20fan.webp" },
-                { name: "Mini Exhaust Fan (Bathroom)", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/Plasticround.webp" },
-                { name: "Industrial Pedestal Fan", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/pedistal%20fans.webp" }
-            ],
-            "Fancy Lights": [
-                { name: "Wall lights", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lights.jpg" },
-                { name: "Decorative wall lamp", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lighbt2.jpg" },
-                { name: "Hanging Lights", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/light%203.jpg" },
-                { name: "wall lamps fancy", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.06.05_df5ac500.jpg" },
-                { name: "Modern Track Lighting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/track_20w_8.webp" },
-                { name: "Outdoor LED Garden Spike", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsAppImage2023-08-20at23.08.39.webp" }
-            ],
-            "Switches & Sockets": [
-                { name: "Schneider fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss1.jpg" },
-                { name: "Matrix fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss2.jpg" },
-                { name: "ECM Fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss3.jpg" },
-                { name: "ZEC Fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.14_e7b3301b.jpg" },
-                { name: "Bush fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.15_52d2c24f.jpg" },
-                { name: "china fitting", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.15_dfbce7b7.jpg" }
-            ],
-            "Circuit Breakers": [
-                { name: "Single Pole Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker%202.webp" },
-                { name: "Double Pole Main Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker.webp" },
-                { name: "Miniature Circuit Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/breaker.webp" },
-                { name: "RCCB Residual Current Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/moulded-case-circuit-breakers-mccb--500x500.webp" },
-                { name: "Moulded Case Circuit Breaker (MCCB)", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images.jpeg" },
-                { name: "3-Pole Industrial Breaker", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/A9F44302.jpeg" }
-            ],
-            "LED Panels": [
-                { name: "Square Recessed Panel", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%20light.webp" },
-                { name: "Round Surface Mount LED", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%202.jpeg" },
-                { name: "Warm White LED Strip", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/led%2044.jpg" },
-                { name: "Square led panel", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(1).jpeg" },
-                { name: "Outdoor lights led", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(2).jpeg" },
-                { name: "Solar lights", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(3).jpeg" }
-            ],
-            "Wiring Cables": [
-                { name: "All type of GM Cables", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/gm%20cable%20list.jpeg" },
-                { name: "PAKISTAN CABLE", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/pak%20cble33.png" },
-                { name: "Fast Cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fast%20cble%2033.jpg" },
-                { name: "TV cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/58a6600b9c7f36e46ceacccb79e30315.png" },
-                { name: "Newage cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(4).jpeg" },
-                { name: "CCTV cable", imageUrl: "https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(5).jpeg" }
-            ]
-        };
+        let cart = [];
+        let currentProductImageUrls = [];
+        let currentImageIndex = 0;
+        
+        // --- SWIPE LOGIC VARIABLES ---
+        let startX = 0;
+        let endX = 0;
+        const SWIPE_THRESHOLD = 50; 
 
-        // Combine all products into a single array (for the 'View All' feature)
-        const ALL_PRODUCTS = Object.values(CATEGORY_PRODUCTS).flat();
+        // --- PRODUCT DATA ---
+        const products = [
+            { id: 101, name: "Wall lights", price: 185.00, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lights.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/WhatsApp%20Image%202025-10-25%20at%2000.06.07_88a4ca8d.jpg", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lighbt2.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Chandelier+View+1", description: "Fancy Wall Lights." },
+            { id: 102, name: "LED Track Lights", price: 45.99, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/track_20w_8.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images.jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(1).jpeg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Pendant+Light+1", description: "Track light." },
+            { id: 103, name: "Wall Lamps", price: 19.50, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251020-WA0002.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251021-WA0012.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251015-WA0018.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=LED+Strip+1", description: "AWall lamps" },
+            { id: 104, name: "SMD lights", price: 29.99, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251023-WA0016.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Wall+Sconce+1", description: "SMD Lights" },
+            { id: 105, name: "Fancy Lights", price: 8.95, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0003.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0002.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0004.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Downlight+Front", description: "Energy-efficient ceiling panel." },
+            { id: 201, name: "ZEC Fitting", price: 7.99, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.14_e7b3301b.jpg", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss3.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(2).jpeg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=Switch+Front+1", description: "High-quality, modern modular switch with silver trim." },
+            { id: 202, name: "Universal Wall Socket with Dual USB", price: 11.50, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(5).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(4).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(3).jpeg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=Socket+USB+1", description: "Wall socket with integrated USB-A and USB-C ports." },
+            { id: 203, name: "Shneider fitting)", price: 29.99, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(7).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/21.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(6).jpeg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=Touch+Panel+1", description: "Schneider switches-sockets" },
+            { id: 204, name: "Matrix Fitting", price: 9.95, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss2.jpg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=20A+Socket+1", description: "Matrix fitting" },
+            { id: 301, name: " Miniature Circuit Breaker (MCB)", price: 4.99, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(8).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(9).jpeg"], thumbnail: "https://via.placeholder.com/300x225/a2d5c6/333333?text=30A+MCB+1", description: "Essential breaker for general circuits." },
+            { id: 302, name: "63A Main Circuit Breaker (Double Pole)", price: 18.90, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(11).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/YCB7-63N-2316.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(10).jpeg"], thumbnail: "https://via.placeholder.com/300x225/a2d5c6/333333?text=63A+Breaker+1", description: "Double-pole breaker for main power isolation." },
+            { id: 303, name: "3 pole circuit breaker)", price: 35.00, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(12).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/3-1.jpg"], thumbnail: "https://via.placeholder.com/300x225/a2d5c6/333333?text=AFCI+Breaker+1", description: "Protects against dangerous electrical arcs that can cause fires." },
+            { id: 401, name: "Waterproof LED Flood Light (100W)", price: 45.00, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(2).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/150W-GEN3-Waterproof-Lap-LED-Flood-Light-IP65-PIR-Motion-Light-Sensor-Outdoor-Garden-Security-Light-3.jpg"], thumbnail: "https://via.placeholder.com/300x225/4f6d7a/ffffff?text=Flood+Light+Front", description: "High-power, durable outdoor security light." },
+            { id: 402, name: "Outdoor wall lights", price: 39.95, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsAppImage2023-08-20at23.08.39.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/ad6ce50be7c10865ab3afafdd5131925.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/WhatsApp%20Image%202025-10-26%20at%2013.29.26_a947b9cb.jpg"], thumbnail: "https://via.placeholder.com/300x225/4f6d7a/ffffff?text=Pathway+Light+Set", description: "Outdoor wall lights" },
+            { id: 403, name: "Garden lights", price: 34.00, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/1530876480-812557395.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/51DTWYKVipL.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(15).jpeg"], thumbnail: "https://via.placeholder.com/300x225/4f6d7a/ffffff?text=Sensor+Light+Full", description: "Outdoor Garden lights" },
+            { id: 501, name: "GM Cable", price: 35.99, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/gm%20cable%20list.jpeg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=Extension+Cable+Coiled", description: "GM Cable" },
+            { id: 502, name: "Fast Cable", price: 15.00, category: "wiring-cables", images: [ "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fast%20cble%2033.jpg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=House+Wire+Roll+1", description: " wire for lighting circuits." },
+            { id: 503, name: "Pakistan Cable", price: 2.50, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/pak%20cble33.png"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=3+Core+Cable+Cut", description: "Wiring Cable" },
+            { id: 504, name: "Coaxial Cable RG-6 (TV/Internet)", price: 0.99, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/58a6600b9c7f36e46ceacccb79e30315.png","https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(5).jpeg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=Coax+Cable+Spool", description: "High-performance cable for TV and broadband connections." },
+            { id: 507, name: "Royal fans", price: 185.00, category: "ceiling-fans", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/acdc%20fan.webp", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans2.webp", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%203.webp"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Chandelier+View+1", description: "fans" }
+        ];
 
-        // Get DOM Elements
-        const productGrid = document.querySelector('.product-grid');
-        const productsHeading = document.querySelector('#products h2');
-        const shopAllBtn = document.getElementById('shop-all-btn');
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const menuIcon = document.getElementById('menu-icon');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileOverlay = document.getElementById('mobile-overlay');
+        // --- CORE FUNCTIONS ---
 
-        // --- Core Functions ---
-
-        // Function to generate and open the WhatsApp link
-        const openWhatsAppOrder = (productDetails) => {
-            const message = `Hello AMMAR&Brothers! I am interested in the **${productDetails}**. Could you please send me the current price, availability, and next steps for my order? Thank you.`;
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-            window.open(whatsappURL, '_blank');
-        };
-
-        // Function to render a single product card
-        const createProductCard = (product) => {
+        function renderProduct(product) {
             const card = document.createElement('div');
-            card.classList.add('product-card');
+            card.className = 'product-card';
+            card.setAttribute('data-category', product.category);
+            card.setAttribute('data-id', product.id);
 
-            card.innerHTML = `
-                <img src="${product.imageUrl}" alt="${product.name}">
+            // Thumbnail (Primary image)
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'image-container';
+
+            const image = document.createElement('img');
+            image.className = 'product-image';
+            image.src = product.images[0]; 
+            image.alt = product.name;
+            image.setAttribute('data-product-id', product.id);
+            
+            // --- ADD TOUCH LISTENERS TO THUMBNAIL IMAGE ---
+            image.addEventListener('touchstart', handleTouchStart, false);
+            image.addEventListener('touchmove', handleTouchMove, false);
+            image.addEventListener('touchend', (e) => handleTouchEnd(e, product.id), false);
+            
+            imageContainer.appendChild(image);
+            
+            // Image Selectors (Dots)
+            const selectors = document.createElement('div');
+            selectors.className = 'image-selectors';
+            product.images.forEach((url, index) => {
+                const dot = document.createElement('div');
+                dot.className = `selector-dot ${index === 0 ? 'active' : ''}`;
+                dot.setAttribute('data-image-index', index);
+                dot.addEventListener('click', (e) => switchImage(e, product.id, index));
+                selectors.appendChild(dot);
+            });
+
+            imageContainer.appendChild(selectors);
+            card.appendChild(imageContainer);
+            
+            // Product Info
+            const info = document.createElement('div');
+            info.className = 'product-info';
+            info.innerHTML = `
                 <h3>${product.name}</h3>
-                <button class="whatsapp-order-btn cta-button" data-product="${product.name}">Inquire on WhatsApp</button>
+                <p><strong>${product.description}</strong></p>
+                <button class="add-to-cart-btn" data-id="${product.id}">Add to Order List</button>
             `;
+            card.appendChild(info);
 
-            // Attach event listeners to the new card's elements
-            card.querySelector('.whatsapp-order-btn').addEventListener('click', (event) => {
-                const productDetails = event.target.getAttribute('data-product');
-                openWhatsAppOrder(productDetails);
-            });
-            card.querySelector('img').addEventListener('click', handleImageClick);
-
-            return card;
+            productGrid.appendChild(card);
         }
 
-        // Function to display ALL products in the selected category
-        const showCategoryProducts = (categoryName) => {
-            const products = CATEGORY_PRODUCTS[categoryName];
-            if (!products) return;
+        function switchImage(e, productId, newIndex) {
+            if (e) e.stopPropagation();
 
-            productsHeading.textContent = `All Products in ${categoryName} (${products.length} Items)`;
-            productGrid.innerHTML = ''; // Clear existing products
+            const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+            if (!card) return;
 
-            // Renders ALL products in the category
-            products.forEach(product => {
-                productGrid.appendChild(createProductCard(product));
-            });
+            const newImage = card.querySelector('.product-image');
+            const newImageSelectors = card.querySelectorAll('.selector-dot');
+            const product = products.find(p => p.id === productId);
 
-            // Ensure the 'View All Products' button is visible to allow returning to the main list
-            shopAllBtn.textContent = `View All Products`;
-            shopAllBtn.style.display = 'block';
-
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        };
-
-        // Function: Show all available products
-        const showAllProducts = () => {
-            productsHeading.textContent = `⚡ Our Complete Product Range (${ALL_PRODUCTS.length} Items)`;
-            productGrid.innerHTML = ''; // Clear existing products
-
-            ALL_PRODUCTS.forEach(product => {
-                productGrid.appendChild(createProductCard(product));
-            });
-
-            // Hide the "View All Products" button once all are shown
-            shopAllBtn.style.display = 'none';
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        // Function to handle the initial page load state
-        const displayInitialProducts = () => {
-            // Display all products on initial load
-            showAllProducts();
-        }
-
-
-        // --- UI/Utility Functions ---
-
-        // MODAL/LIGHTBOX FUNCTIONALITY
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("img01");
-        const captionText = document.getElementById("caption");
-        const span = document.getElementsByClassName("modal-close")[0];
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        modal.onclick = function(event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
+            if (newIndex >= 0 && newIndex < product.images.length) {
+                newImage.src = product.images[newIndex];
+                
+                newImageSelectors.forEach(dot => dot.classList.remove('active'));
+                newImageSelectors[newIndex].classList.add('active');
             }
         }
 
-        const handleImageClick = (event) => {
-            modal.style.display = "block";
-            modalImg.src = event.target.src;
-            captionText.innerHTML = event.target.alt;
-        };
-
-        // DARK MODE TOGGLE FUNCTIONALITY
-        const toggleDarkMode = () => {
-            const body = document.body;
-            body.classList.toggle('dark-mode');
-
-            const icon = darkModeToggle.querySelector('i');
-            if (body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'dark');
+        function renderProducts(filteredProducts = products) {
+            productGrid.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                productGrid.innerHTML = '<p style="text-align: center; width: 100%; grid-column: 1 / -1; padding: 20px;">No products found matching your search criteria. Try a different term or category.</p>';
             } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'light');
-            }
-        };
-
-        // MOBILE MENU TOGGLE FUNCTIONALITY
-        const toggleMobileMenu = () => {
-            const isOpen = mobileMenu.classList.toggle('open');
-
-            // Toggle the overlay
-            mobileOverlay.style.display = isOpen ? 'block' : 'none';
-
-            // Change the icon (X or Bars)
-            const icon = menuIcon.querySelector('i');
-            if (isOpen) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        };
-
-        // --- Setup and Event Listeners ---
-
-        const setupInitialListeners = () => {
-            // 1. Category List Items
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.addEventListener('click', (event) => {
-                    const categoryName = event.target.getAttribute('data-category');
-                    showCategoryProducts(categoryName);
-                    // Close the mobile menu if active
-                    if (mobileMenu.classList.contains('open')) {
-                        toggleMobileMenu(); 
-                    }
-                });
-            });
-
-            // 2. Shop All/View All Button
-            if (shopAllBtn) {
-                shopAllBtn.addEventListener('click', showAllProducts);
-            }
-
-            // 3. Dark Mode Toggle & Initial Check
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('click', toggleDarkMode);
-                // Check for saved theme preference
-                if (localStorage.getItem('theme') === 'dark') {
-                    toggleDarkMode();
-                }
-            }
-
-            // 4. Mobile Menu Toggle
-            if (menuIcon) {
-                menuIcon.addEventListener('click', toggleMobileMenu);
+                filteredProducts.forEach(renderProduct);
             }
             
-            // 5. Mobile Menu Overlay/Links (closes menu when clicked)
-            if (mobileOverlay) {
-                mobileOverlay.addEventListener('click', toggleMobileMenu);
+            // Re-attach event listeners after rendering
+            attachProductImageClickListeners();
+        }
+        
+        // --- SEARCH FUNCTIONALITY ---
+        function filterProductsBySearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            const currentCategoryElement = document.querySelector('#category-list li.active');
+            const currentCategory = currentCategoryElement ? currentCategoryElement.getAttribute('data-category') : 'all';
+            
+            // 1. Filter by category first (if not 'all')
+            let filteredByCategory = products;
+            if (currentCategory !== 'all') {
+                filteredByCategory = products.filter(p => p.category === currentCategory);
             }
-            document.querySelectorAll('.mobile-nav a').forEach(link => {
-                 link.addEventListener('click', toggleMobileMenu);
+            
+            // 2. Filter by search query on the result set
+            const finalFiltered = filteredByCategory.filter(product => {
+                const nameMatch = product.name.toLowerCase().includes(query);
+                const descMatch = product.description.toLowerCase().includes(query);
+                return nameMatch || descMatch;
             });
 
-            // 6. Initial Product Display
-            displayInitialProducts();
-        };
+            renderProducts(finalFiltered);
+        }
 
-        // Execute setup function when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', setupInitialListeners);
+        // --- SWIPE HANDLERS ---
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+            endX = startX; 
+        }
+
+        function handleTouchMove(e) {
+            endX = e.touches[0].clientX;
+        }
+        
+        function handleTouchEnd(e, productId = null) {
+            const deltaX = startX - endX;
+            
+            // Check if it's a quick tap (deltaX near zero)
+            if (Math.abs(deltaX) < 5) {
+                if (productId !== null) {
+                    // Open the modal if it was a tap on the thumbnail
+                    handleImageClick(e);
+                }
+                return;
+            }
+
+            // Check if the swipe exceeds the threshold
+            if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+                if (productId !== null) {
+                    // --- THUMBNAIL SWIPE LOGIC ---
+                    const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+                    const activeDot = card.querySelector('.selector-dot.active');
+                    let currentIndex = activeDot ? parseInt(activeDot.getAttribute('data-image-index')) : 0;
+                    const product = products.find(p => p.id === productId);
+                    const maxIndex = product.images.length - 1;
+
+                    let nextIndex;
+                    if (deltaX > 0) { // Swiped Left -> Show Next image
+                        nextIndex = (currentIndex + 1) > maxIndex ? 0 : (currentIndex + 1);
+                    } else { // Swiped Right -> Show Previous image
+                        nextIndex = (currentIndex - 1) < 0 ? maxIndex : (currentIndex - 1);
+                    }
+
+                    switchImage(null, productId, nextIndex);
+
+                } else {
+                    // --- MODAL SWIPE LOGIC ---
+                    if (deltaX > 0) { // Swiped Left -> Show Next image
+                        showNextImage(1);
+                    } else { // Swiped Right -> Show Previous image
+                        showNextImage(-1);
+                    }
+                }
+            }
+            // Reset X coordinates
+            startX = 0;
+            endX = 0;
+        }
+
+        // --- MODAL (LIGHTBOX) FUNCTIONS ---
+
+        function openImageModal(productId, initialImageIndex) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            currentProductImageUrls = product.images;
+            currentImageIndex = initialImageIndex;
+            
+            modalContent.src = currentProductImageUrls[currentImageIndex];
+            imageModal.style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            imageModal.style.display = 'none';
+        }
+
+        function showNextImage(direction) {
+            let newIndex = currentImageIndex + direction;
+            const maxIndex = currentProductImageUrls.length - 1;
+
+            if (newIndex > maxIndex) {
+                newIndex = 0; 
+            } else if (newIndex < 0) {
+                newIndex = maxIndex; 
+            }
+
+            currentImageIndex = newIndex;
+            modalContent.src = currentProductImageUrls[currentImageIndex];
+        }
+
+        // --- CART/ORDER LIST FUNCTIONS (Unchanged) ---
+        function updateCartDisplay() {
+            cartItemsContainer.innerHTML = '';
+            let itemCount = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.appendChild(emptyCartMessage.cloneNode(true));
+                cartCountSpan.textContent = '0';
+                return;
+            }
+            
+            if (emptyCartMessage) {
+                const existingEmptyMessage = cartItemsContainer.querySelector('.empty-cart-message');
+                if (existingEmptyMessage) existingEmptyMessage.remove();
+            }
+
+            cart.forEach(item => {
+                const product = products.find(p => p.id === item.id);
+                if (!product) return;
+
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.className = 'cart-item';
+                cartItemDiv.innerHTML = `
+                    <img src="${product.images[0]}" alt="${product.name}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <p><strong>${product.name}</strong></p>
+                        <p>Qty: ${item.quantity}</p>
+                    </div>
+                    <button class="remove-item-btn" data-id="${item.id}">Remove</button>
+                `;
+                cartItemsContainer.appendChild(cartItemDiv);
+                itemCount += item.quantity;
+            });
+
+            cartCountSpan.textContent = itemCount;
+        }
+        
+        function addToCart(productId) {
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id: productId, quantity: 1 });
+            }
+            updateCartDisplay();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartDisplay();
+        }
+        
+        function generateWhatsAppMessage() {
+            if (cart.length === 0) {
+                alert("Your order list is empty. Please add items before ordering.");
+                return;
+            }
+
+            let message = "Hello AMMAR & Brothers,\n\nI would like to place an order for the following items:\n\n";
+            cart.forEach(item => {
+                const product = products.find(p => p.id === item.id);
+                if (product) {
+                    message += `- ${product.name} (ID: ${item.id}) - Quantity: ${item.quantity}\n`;
+                }
+            });
+
+            message += "\nThank you. Please confirm availability and pricing.";
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+        }
+
+        // --- EVENT LISTENERS (Centralized) ---
+
+        function attachProductImageClickListeners() {
+            document.querySelectorAll('.product-image').forEach(img => {
+                img.removeEventListener('click', handleImageClick); 
+                img.addEventListener('click', handleImageClick);
+            });
+        }
+        
+        function handleImageClick(e) {
+            e.preventDefault();
+            if (e.target.classList.contains('product-image') && e.target.closest('.product-card')) {
+                const productId = parseInt(e.target.getAttribute('data-product-id'));
+                const productCard = e.target.closest('.product-card');
+                const activeDot = productCard.querySelector('.selector-dot.active');
+                const initialIndex = activeDot ? parseInt(activeDot.getAttribute('data-image-index')) : 0;
+                
+                openImageModal(productId, initialIndex);
+            }
+        }
+
+        // Header Icons and Search Overlay
+        document.getElementById('search-icon').addEventListener('click', () => {
+            document.getElementById('search-overlay').classList.add('active');
+            searchInput.focus();
+        });
+
+        document.querySelector('.search-content .close-btn').addEventListener('click', () => {
+            document.getElementById('search-overlay').classList.remove('active');
+            // Clear search when closing the overlay
+            searchInput.value = ''; 
+            filterProductsBySearch(); 
+        });
+        
+        // --- KEY LISTENER FOR SEARCH INPUT ---
+        searchInput.addEventListener('input', filterProductsBySearch);
+        
+        // Cart Listeners
+        document.getElementById('cart-icon').addEventListener('click', () => {
+            cartOverlay.classList.add('active');
+        });
+        
+        document.getElementById('close-cart').addEventListener('click', () => {
+            cartOverlay.classList.remove('active');
+        });
+        
+        // Modal Listeners
+        closeImageModalBtn.addEventListener('click', closeImageModal);
+        modalPrevBtn.addEventListener('click', () => showNextImage(-1));
+        modalNextBtn.addEventListener('click', () => showNextImage(1));
+        
+        imageModal.addEventListener('click', (e) => {
+             if (e.target.id === 'image-modal') {
+                 closeImageModal();
+             }
+        });
+        
+        // Modal Swipe Listeners
+        modalContent.addEventListener('touchstart', handleTouchStart, false);
+        modalContent.addEventListener('touchmove', handleTouchMove, false);
+        modalContent.addEventListener('touchend', (e) => handleTouchEnd(e, null), false);
+
+        // Category Filter
+        categoryList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                document.querySelectorAll('#category-list li').forEach(li => li.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // When a category is clicked, the search input is used to filter that category
+                filterProductsBySearch();
+            }
+        });
+        
+        // Add to Cart Listeners
+        productGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const productId = parseInt(e.target.getAttribute('data-id'));
+                addToCart(productId);
+            }
+        });
+
+        // Remove from Cart Listeners
+        cartItemsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-item-btn')) {
+                const productId = parseInt(e.target.getAttribute('data-id'));
+                removeFromCart(productId);
+            }
+        });
+
+        // WhatsApp Order Button
+        document.getElementById('order-whatsapp-btn').addEventListener('click', generateWhatsAppMessage);
+
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartDisplay();
+        });
+
     </script>
 </body>
 </html>
