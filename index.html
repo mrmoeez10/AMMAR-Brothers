@@ -496,6 +496,39 @@
         .cart-item-details {
             flex-grow: 1;
         }
+        
+        /* NEW: Quantity Controls in Cart */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        .qty-btn {
+            background: var(--border-color);
+            border: none;
+            padding: 3px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .qty-btn:hover {
+            background-color: #ccc;
+        }
+        
+        body.dark-mode .qty-btn {
+             background: #333;
+             color: var(--text-color);
+        }
+
+        .quantity-display {
+            width: 30px;
+            text-align: center;
+            margin: 0 5px;
+        }
 
         .remove-item-btn {
             background: none;
@@ -505,6 +538,7 @@
             cursor: pointer;
             border-radius: 4px;
             font-size: 0.8em;
+            margin-left: 10px; /* Space from quantity controls */
         }
         
         .empty-cart-message {
@@ -911,7 +945,11 @@
                     <img src="${product.images[0]}" alt="${product.name}" class="cart-item-image">
                     <div class="cart-item-details">
                         <strong style="font-size: 0.95em;">${product.name}</strong>
-                        <p style="font-size: 0.85em; margin: 3px 0;">Quantity: ${item.quantity}</p>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" data-id="${item.id}" data-action="decrease">-</button>
+                            <span class="quantity-display">${item.quantity}</span>
+                            <button class="qty-btn" data-id="${item.id}" data-action="increase">+</button>
+                        </div>
                     </div>
                     <button class="remove-item-btn" data-id="${item.id}">Remove</button>
                 `;
@@ -933,12 +971,32 @@
             }
 
             renderCart();
-            openCart();
+            // REMOVED: openCart(); to stop automatically opening the cart
         }
 
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
             renderCart();
+        }
+        
+        function increaseQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += 1;
+                renderCart();
+            }
+        }
+
+        function decreaseQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity -= 1;
+                if (item.quantity < 1) {
+                    removeFromCart(productId); // Remove if quantity drops to 0 or less
+                } else {
+                    renderCart();
+                }
+            }
         }
 
         function generateWhatsAppOrderLink() {
@@ -1095,11 +1153,20 @@
             }
         });
         
-        // Remove from Cart
+        // Cart Controls (Remove and Quantity)
         cartItemsContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-item-btn')) {
-                const id = parseInt(e.target.getAttribute('data-id'));
+            const target = e.target;
+            const id = parseInt(target.getAttribute('data-id'));
+            
+            if (target.classList.contains('remove-item-btn')) {
                 removeFromCart(id);
+            } else if (target.classList.contains('qty-btn')) {
+                const action = target.getAttribute('data-action');
+                if (action === 'increase') {
+                    increaseQuantity(id);
+                } else if (action === 'decrease') {
+                    decreaseQuantity(id);
+                }
             }
         });
 
@@ -1119,6 +1186,7 @@
         });
         
         function openCart() {
+             renderCart(); // Re-render before opening to ensure latest quantity updates
              cartOverlay.classList.add('active');
              document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
