@@ -23,19 +23,40 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f9;
-            color: #333;
+            /* Default Light Mode Colors */
+            --bg-color: #f4f7f9;
+            --main-bg: #ffffff;
+            --text-color: #333;
+            --primary-color: #173f5f;
+            --accent-color: #3caea3;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --border-color: #eee;
+            
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* --- DARK MODE STYLES --- */
+        body.dark-mode {
+            --bg-color: #121212;
+            --main-bg: #1e1e1e;
+            --text-color: #f0f0f0;
+            --primary-color: #79c5c7; /* Lightened primary for contrast */
+            --accent-color: #6ed3c8;
+            --shadow-color: rgba(255, 255, 255, 0.1);
+            --border-color: #333;
         }
 
         /* Header & Navigation */
         .main-header {
-            background-color: #ffffff;
+            background-color: var(--main-bg);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 4px var(--shadow-color);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -50,12 +71,19 @@
         .logo-img {
             height: 30px; 
             margin-right: 8px;
+            /* Simple filter adjustment for dark mode logo if needed */
+            filter: var(--logo-filter, none); 
+        }
+
+        body.dark-mode .logo-img {
+            /* If the logo is dark, invert it for dark mode */
+            filter: invert(0.8) hue-rotate(180deg);
         }
 
         .logo {
             font-size: 1.4em; 
             font-weight: bold;
-            color: #173f5f; 
+            color: var(--primary-color); 
         }
 
         .main-header nav {
@@ -63,7 +91,7 @@
             width: 100%;
             text-align: center;
             padding-top: 10px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border-color);
             margin-top: 10px;
             display: flex;
             justify-content: space-around;
@@ -71,7 +99,7 @@
         
         .main-header nav a {
             text-decoration: none;
-            color: #555;
+            color: var(--text-color);
             margin: 0 5px; 
             font-size: 0.9em;
             padding: 5px 0;
@@ -80,15 +108,33 @@
 
         .header-icons {
             margin-left: auto; 
+            display: flex;
+            align-items: center;
         }
 
         .header-icons i {
             font-size: 1.1em; 
             margin-left: 15px;
             cursor: pointer;
-            color: #555;
+            color: var(--text-color);
             transition: color 0.3s;
         }
+        
+        /* Specific style for the dark mode toggle icon */
+        .header-icons #dark-mode-toggle {
+            color: var(--text-color);
+        }
+
+        /* Adjusting the moon icon to look like a sun in light mode */
+        body:not(.dark-mode) .header-icons #dark-mode-toggle .fa-moon {
+            content: "\f185"; /* fa-sun unicode */
+        }
+        
+        /* Dark mode styling for the icon itself */
+        body.dark-mode .header-icons #dark-mode-toggle {
+            color: var(--primary-color); 
+        }
+
 
         #cart-count {
             background-color: #fc5130; 
@@ -114,9 +160,9 @@
         .sidebar {
             width: 100%;
             padding: 15px;
-            background: #fff;
+            background: var(--main-bg);
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 10px var(--shadow-color);
             margin-bottom: 15px;
         }
 
@@ -143,7 +189,7 @@
         }
 
         #category-list li:hover, #category-list li.active {
-            background-color: #173f5f; 
+            background-color: var(--primary-color); 
             color: white;
         }
 
@@ -157,18 +203,18 @@
 
         /* Product Card */
         .product-card {
-            background-color: #fff;
+            background-color: var(--main-bg);
             overflow: hidden;
             text-align: center;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 8px var(--shadow-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative; 
         }
         
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px var(--shadow-color);
         }
 
         /* Image Container and Primary Image */
@@ -177,7 +223,7 @@
             width: 100%;
             height: 180px; 
             overflow: hidden;
-            touch-action: pan-y; /* Allows vertical scrolling while allowing horizontal swiping to be captured */
+            touch-action: pan-y;
         }
         
         .product-image {
@@ -199,8 +245,12 @@
             justify-content: center;
             gap: 5px;
             padding: 5px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(var(--text-color, 0,0,0), 0.7); /* Adjusting background for both modes */
             pointer-events: all; 
+        }
+        
+        body.dark-mode .image-selectors {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .selector-dot {
@@ -213,7 +263,7 @@
         }
 
         .selector-dot.active {
-            background-color: #173f5f;
+            background-color: var(--primary-color);
             transform: scale(1.2);
         }
 
@@ -231,7 +281,7 @@
         }
 
         .add-to-cart-btn {
-            background-color: #3caea3; 
+            background-color: var(--accent-color); 
             color: white;
             border: none;
             padding: 10px 20px;
@@ -245,6 +295,11 @@
         .add-to-cart-btn:hover {
             background-color: #2b847b;
         }
+        
+        body.dark-mode .add-to-cart-btn:hover {
+             background-color: #4daaa0;
+        }
+
 
         /* FULL IMAGE MODAL STYLES (Lightbox) */
         #image-modal {
@@ -359,6 +414,9 @@
             border: none;
             border-radius: 5px;
             outline: none;
+            background-color: var(--main-bg);
+            color: var(--text-color);
+            box-shadow: 0 0 10px var(--shadow-color);
         }
 
         .close-btn {
@@ -374,7 +432,7 @@
             top: 50%;
             transform: translateY(-50%);
             font-size: 1.5em;
-            color: #333;
+            color: var(--text-color);
             cursor: pointer;
         }
 
@@ -398,7 +456,7 @@
             top: 0;
             right: 0;
             height: 100%;
-            background: #fff;
+            background: var(--main-bg);
             padding: 20px;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             transform: translateX(100%);
@@ -407,6 +465,7 @@
             flex-direction: column;
             width: 90%; 
             max-width: 350px;
+            color: var(--text-color);
         }
 
         .cart-overlay.active .cart-sidebar {
@@ -423,7 +482,7 @@
             display: flex;
             align-items: center;
             padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .cart-item-image {
@@ -481,6 +540,12 @@
             padding: 20px 0;
             margin-top: 40px;
         }
+        
+        /* About Section (Ensure good contrast in dark mode) */
+        #about-section h2, #about-section p {
+            color: var(--text-color); /* Inherit color, or force white/light */
+        }
+
 
         /* ==================================== */
         /* TABLET VIEW (481px and up) */
@@ -546,6 +611,7 @@
             <a href="#contact-footer">Contact</a>
         </nav>
         <div class="header-icons">
+            <i class="fas fa-moon" id="dark-mode-toggle"></i>
             <i class="fas fa-search" id="search-icon"></i> 
             <i class="fas fa-shopping-cart" id="cart-icon"></i>
             <span id="cart-count">0</span>
@@ -579,6 +645,7 @@
                 <li data-category="outdoor-lights">Outdoor Lights</li>
                 <li data-category="wiring-cables">Wiring Cables</li>
                 <li data-category="ceiling-fans">Ceiling Fans</li>
+                <li data-category="Irons">Irons</li>
             </ul>
         </aside>
 
@@ -616,7 +683,7 @@
 
     <script>
         // --- GLOBAL VARIABLES & DATA ---
-        const WHATSAPP_NUMBER = "03366577284";
+        const WHATSAPP_NUMBER = "923366577284"; // Use format without leading '+'
         const productGrid = document.getElementById('product-grid');
         const imageModal = document.getElementById('image-modal');
         const modalContent = document.getElementById('modal-content');
@@ -627,10 +694,17 @@
         const cartItemsContainer = document.getElementById('cart-items');
         const cartCountSpan = document.getElementById('cart-count');
         const searchInput = document.getElementById('search-input');
+        const searchIcon = document.getElementById('search-icon');
+        const searchOverlay = document.getElementById('search-overlay');
+        const cartIcon = document.getElementById('cart-icon');
         const cartOverlay = document.getElementById('cart-overlay');
+        const closeCartBtn = document.getElementById('close-cart');
+        const orderWhatsappBtn = document.getElementById('order-whatsapp-btn');
         const emptyCartMessage = document.querySelector('.empty-cart-message');
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-        let cart = [];
+
+        let cart = JSON.parse(localStorage.getItem('ammarBrothersCart')) || [];
         let currentProductImageUrls = [];
         let currentImageIndex = 0;
         
@@ -641,28 +715,32 @@
 
         // --- PRODUCT DATA ---
         const products = [
-            { id: 101, name: "Wall lights", price: 185.00, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lights.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/WhatsApp%20Image%202025-10-25%20at%2000.06.07_88a4ca8d.jpg", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lighbt2.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Chandelier+View+1", description: "Fancy Wall Lights." },
-            { id: 102, name: "LED Track Lights", price: 45.99, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/track_20w_8.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images.jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(1).jpeg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Pendant+Light+1", description: "Track light." },
-            { id: 103, name: "Wall Lamps", price: 19.50, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251020-WA0002.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251021-WA0012.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251015-WA0018.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=LED+Strip+1", description: "AWall lamps" },
-            { id: 104, name: "SMD lights", price: 29.99, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251023-WA0016.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Wall+Sconce+1", description: "SMD Lights" },
-            { id: 105, name: "Fancy Lights", price: 8.95, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0003.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0002.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0004.jpg"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Downlight+Front", description: "Energy-efficient ceiling panel." },
-            { id: 201, name: "ZEC Fitting", price: 7.99, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.14_e7b3301b.jpg", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss3.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(2).jpeg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=Switch+Front+1", description: "High-quality, modern modular switch with silver trim." },
-            { id: 202, name: "Universal Wall Socket with Dual USB", price: 11.50, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(5).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(4).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(3).jpeg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=Socket+USB+1", description: "Wall socket with integrated USB-A and USB-C ports." },
-            { id: 203, name: "Shneider fitting)", price: 29.99, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(7).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/21.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(6).jpeg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=Touch+Panel+1", description: "Schneider switches-sockets" },
-            { id: 204, name: "Matrix Fitting", price: 9.95, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss2.jpg"], thumbnail: "https://via.placeholder.com/300x225/f6a328/ffffff?text=20A+Socket+1", description: "Matrix fitting" },
-            { id: 301, name: " Miniature Circuit Breaker (MCB)", price: 4.99, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(8).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(9).jpeg"], thumbnail: "https://via.placeholder.com/300x225/a2d5c6/333333?text=30A+MCB+1", description: "Essential breaker for general circuits." },
-            { id: 302, name: "63A Main Circuit Breaker (Double Pole)", price: 18.90, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(11).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/YCB7-63N-2316.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(10).jpeg"], thumbnail: "https://via.placeholder.com/300x225/a2d5c6/333333?text=63A+Breaker+1", description: "Double-pole breaker for main power isolation." },
-            { id: 303, name: "3 pole circuit breaker)", price: 35.00, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(12).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/3-1.jpg"], thumbnail: "https://via.placeholder.com/300x225/a2d5c6/333333?text=AFCI+Breaker+1", description: "Protects against dangerous electrical arcs that can cause fires." },
-            { id: 401, name: "Waterproof LED Flood Light (100W)", price: 45.00, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(2).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/150W-GEN3-Waterproof-Lap-LED-Flood-Light-IP65-PIR-Motion-Light-Sensor-Outdoor-Garden-Security-Light-3.jpg"], thumbnail: "https://via.placeholder.com/300x225/4f6d7a/ffffff?text=Flood+Light+Front", description: "High-power, durable outdoor security light." },
-            { id: 402, name: "Outdoor wall lights", price: 39.95, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsAppImage2023-08-20at23.08.39.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/ad6ce50be7c10865ab3afafdd5131925.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/WhatsApp%20Image%202025-10-26%20at%2013.29.26_a947b9cb.jpg"], thumbnail: "https://via.placeholder.com/300x225/4f6d7a/ffffff?text=Pathway+Light+Set", description: "Outdoor wall lights" },
-            { id: 403, name: "Garden lights", price: 34.00, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/1530876480-812557395.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/51DTWYKVipL.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(15).jpeg"], thumbnail: "https://via.placeholder.com/300x225/4f6d7a/ffffff?text=Sensor+Light+Full", description: "Outdoor Garden lights" },
-            { id: 501, name: "GM Cable", price: 35.99, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/gm%20cable%20list.jpeg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=Extension+Cable+Coiled", description: "GM Cable" },
-            { id: 502, name: "Fast Cable", price: 15.00, category: "wiring-cables", images: [ "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fast%20cble%2033.jpg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=House+Wire+Roll+1", description: " wire for lighting circuits." },
-            { id: 503, name: "Pakistan Cable", price: 2.50, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/pak%20cble33.png"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=3+Core+Cable+Cut", description: "Wiring Cable" },
-            { id: 504, name: "Coaxial Cable RG-6 (TV/Internet)", price: 0.99, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/58a6600b9c7f36e46ceacccb79e30315.png","https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(5).jpeg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=Coax+Cable+Spool", description: "High-performance cable for TV and broadband connections." },
-            { id: 507, name: "Royal fans", price: 185.00, category: "ceiling-fans", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/acdc%20fan.webp", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans2.webp", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%203.webp"], thumbnail: "https://via.placeholder.com/300x225/4c7293/ffffff?text=Chandelier+View+1", description: "fans" },
-            { id: 508, name:  "Bracket Fans", price:185.00, category:"ceiling-fans", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/bracet%20fan.webp","https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images.jpeg", "https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(2).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(1).jpeg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=Coax+Cable+Spool", description: "Bracket Fans" },
-            { id: 509, name:  "Exhaust Fans", price:185.00, category:"ceiling-fans", images: ["https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(3).jpeg","https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(4).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(6).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(5).jpeg"], thumbnail: "https://via.placeholder.com/300x225/e84855/ffffff?text=Coax+Cable+Spool", description: "Premium Quality fans" }
+            { id: 101, name: "Wall lights", price: 185.00, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lights.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/WhatsApp%20Image%202025-10-25%20at%2000.06.07_88a4ca8d.jpg", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/wall%20lighbt2.jpg"], description: "Fancy Wall Lights." },
+            { id: 102, name: "LED Track Lights", price: 45.99, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/track_20w_8.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images.jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(1).jpeg"], description: "Track light." },
+            { id: 103, name: "Wall Lamps", price: 19.50, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251020-WA0002.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251021-WA0012.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251015-WA0018.jpg"], description: "Wall lamps" },
+            { id: 104, name: "SMD lights", price: 29.99, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251023-WA0016.jpg"], description: "SMD Lights" },
+            { id: 105, name: "Fancy Lights", price: 8.95, category: "fancy-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0003.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0002.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/IMG-20251026-WA0004.jpg"], description: "Energy-efficient ceiling panel." },
+            { id: 201, name: "ZEC Fitting", price: 7.99, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsApp%20Image%202025-10-25%20at%2000.17.14_e7b3301b.jpg", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss3.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(2).jpeg"], description: "High-quality, modern modular switch with silver trim." },
+            { id: 202, name: "Universal Wall Socket with Dual USB", price: 11.50, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(5).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(4).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(3).jpeg"], description: "Wall socket with integrated USB-A and USB-C ports." },
+            { id: 203, name: "Shneider fitting)", price: 29.99, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(7).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/21.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(6).jpeg"], description: "Schneider switches-sockets" },
+            { id: 204, name: "Matrix Fitting", price: 9.95, category: "switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/ss2.jpg"], description: "Matrix fitting" },
+            { id: 205, name: "Clopal Elegent", price:5.00, category:"switches-sockets", images: ["https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/Elegant-Grey-6-Gang.webp","https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images%20(6).jpeg","https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images%20(5).jpeg","https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images%20(4).jpeg"], description: "Clopal elegent high quality fitting"},
+            { id: 301, name: " Miniature Circuit Breaker (MCB)", price: 4.99, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(8).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(9).jpeg"], description: "Essential breaker for general circuits." },
+            { id: 302, name: "63A Main Circuit Breaker (Double Pole)", price: 18.90, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(11).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/YCB7-63N-2316.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(10).jpeg"], description: "Double-pole breaker for main power isolation." },
+            { id: 303, name: "3 pole circuit breaker)", price: 35.00, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(12).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/3-1.jpg"], description: "Protects against dangerous electrical arcs that can cause fires." },
+            { id: 304, name: "MCCB Breaker", price: 35.00, category: "breakers", images: ["https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images%20(7).jpeg","https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/YEM3-125.webp","https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/China-Big-Factory-Good-Price-MCCB-160A-3p-160-AMP-150-Circuit-Breaker-for-Export.avif"], description: "MCCB Circuit Breaker" },
+            { id: 401, name: "Waterproof LED Flood Light (100W)", price: 45.00, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(2).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/150W-GEN3-Waterproof-Lap-LED-Flood-Light-IP65-PIR-Motion-Light-Sensor-Outdoor-Garden-Security-Light-3.jpg"], description: "High-power, durable outdoor security light." },
+            { id: 402, name: "Outdoor wall lights", price: 39.95, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/WhatsAppImage2023-08-20at23.08.39.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/ad6ce50be7c10865ab3afafdd5131925.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/WhatsApp%20Image%202025-10-26%20at%2013.29.26_a947b9cb.jpg"], description: "Outdoor wall lights" },
+            { id: 403, name: "Garden lights", price: 34.00, category: "outdoor-lights", images: ["https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/1530876480-812557395.webp", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/51DTWYKVipL.jpg", "https://uploads.onecompiler.io/433bkrhuh/442rsbwh4/images%20(15).jpeg"], description: "Outdoor Garden lights" },
+            { id: 501, name: "GM Cable", price: 35.99, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/gm%20cable%20list.jpeg"], description: "GM Cable" },
+            { id: 502, name: "Fast Cable", price: 15.00, category: "wiring-cables", images: [ "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fast%20cble%2033.jpg"], description: " wire for lighting circuits." },
+            { id: 503, name: "Pakistan Cable", price: 2.50, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/pak%20cble33.png"], description: "Wiring Cable" },
+            { id: 504, name: "Coaxial Cable RG-6 (TV/Internet)", price: 0.99, category: "wiring-cables", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/58a6600b9c7f36e46ceacccb79e30315.png","https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/images%20(5).jpeg"], description: "High-performance cable for TV and broadband connections." },
+            { id: 507, name: "Royal fans", price: 185.00, category: "ceiling-fans", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/acdc%20fan.webp", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans2.webp", "https://uploads.onecompiler.io/433bkrhuh/43sqxnknc/fans%203.webp"], description: "fans" },
+            { id: 508, name: "Bracket Fans", price:185.00, category:"ceiling-fans", images: ["https://uploads.onecompiler.io/433bkrhuh/442m5gpb6/bracet%20fan.webp","https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images.jpeg", "https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(2).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(1).jpeg"], description: "Bracket Fans" },
+            { id: 509, name: "Exhaust Fans", price:185.00, category:"ceiling-fans", images: ["https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(3).jpeg","https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(4).jpeg", "https://uploads.onecompiler.io/433bkrhuh/442v3xpw7/images%20(6).jpeg", "https://uploads.onecompiler.io/442v3xpw7/images%20(5).jpeg"], description: "Premium Quality fans" },
+            { id: 601, name: "Irons", price:185.00, category:"Irons", images: ["https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images%20(2).jpeg","https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images.jpeg" ,"https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images%20(1).jpeg"], description: "Solar Wapda inverter iron." },
+            { id: 602, name: "Irons", price:200, category:"Irons", images: ["https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/national-deluxe-automatic-iron.webp","https://uploads.onecompiler.io/433bkrhuh/442w5z3yb/images%20(3).jpeg"], description: "National Iron (1000W)"}
         ];
 
         // --- CORE FUNCTIONS ---
@@ -671,7 +749,7 @@
             const card = document.createElement('div');
             card.className = 'product-card';
             card.setAttribute('data-category', product.category);
-            card.setAttribute('data-id', product.id);
+            card.setAttribute('data-id', product.id); 
 
             // Thumbnail (Primary image)
             const imageContainer = document.createElement('div');
@@ -743,288 +821,329 @@
             } else {
                 filteredProducts.forEach(renderProduct);
             }
-            
-            // Re-attach event listeners after rendering
-            attachProductImageClickListeners();
-        }
-        
-        // --- SEARCH FUNCTIONALITY ---
-        function filterProductsBySearch() {
-            const query = searchInput.value.toLowerCase().trim();
-            const currentCategoryElement = document.querySelector('#category-list li.active');
-            const currentCategory = currentCategoryElement ? currentCategoryElement.getAttribute('data-category') : 'all';
-            
-            // 1. Filter by category first (if not 'all')
-            let filteredByCategory = products;
-            if (currentCategory !== 'all') {
-                filteredByCategory = products.filter(p => p.category === currentCategory);
-            }
-            
-            // 2. Filter by search query on the result set
-            const finalFiltered = filteredByCategory.filter(product => {
-                const nameMatch = product.name.toLowerCase().includes(query);
-                const descMatch = product.description.toLowerCase().includes(query);
-                return nameMatch || descMatch;
-            });
-
-            renderProducts(finalFiltered);
         }
 
-        // --- SWIPE HANDLERS ---
+        // --- IMAGE SWIPE & GALLERY LOGIC ---
+
+        // Helper to find the product ID from an event target
+        function getProductId(target) {
+            // Find the closest parent with class 'product-card'
+            const card = target.closest('.product-card');
+            return card ? parseInt(card.getAttribute('data-id')) : null;
+        }
+
+        // Touch start for swipe detection
         function handleTouchStart(e) {
             startX = e.touches[0].clientX;
-            endX = startX; 
+            endX = startX; // Reset endX
         }
 
+        // Touch move for updating position
         function handleTouchMove(e) {
             endX = e.touches[0].clientX;
         }
-        
-        function handleTouchEnd(e, productId = null) {
-            const deltaX = startX - endX;
+
+        // Touch end to determine if a swipe occurred
+        function handleTouchEnd(e) {
+            const target = e.target;
+            const productId = getProductId(target);
+
+            if (!productId) return; 
+
+            const distance = endX - startX;
+            const product = products.find(p => p.id === productId);
+
+            if (!product) return;
             
-            // Check if it's a quick tap (deltaX near zero)
-            if (Math.abs(deltaX) < 5) {
-                if (productId !== null) {
-                    // Open the modal if it was a tap on the thumbnail
-                    handleImageClick(e);
+            const card = target.closest('.product-card');
+            const currentDot = card.querySelector('.selector-dot.active');
+            let currentIndex = currentDot ? parseInt(currentDot.getAttribute('data-image-index')) : 0;
+            let newIndex = currentIndex;
+
+            // Prevent default behavior if a swipe is detected (to stop accidental scrolling)
+            if (Math.abs(distance) > SWIPE_THRESHOLD) {
+                e.preventDefault(); 
+                if (distance < -SWIPE_THRESHOLD) { // Swiped Left (Next image)
+                    newIndex = (currentIndex + 1) % product.images.length;
+                } else if (distance > SWIPE_THRESHOLD) { // Swiped Right (Previous image)
+                    newIndex = (currentIndex - 1 + product.images.length) % product.images.length;
                 }
-                return;
+                switchImage(null, productId, newIndex);
+            } else if (distance === 0 && e.target.classList.contains('product-image')) {
+                // If it's a tap (distance is negligible)
+                openModal(productId, currentIndex);
             }
 
-            // Check if the swipe exceeds the threshold
-            if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
-                if (productId !== null) {
-                    // --- THUMBNAIL SWIPE LOGIC ---
-                    const card = document.querySelector(`.product-card[data-id="${productId}"]`);
-                    const activeDot = card.querySelector('.selector-dot.active');
-                    let currentIndex = activeDot ? parseInt(activeDot.getAttribute('data-image-index')) : 0;
-                    const product = products.find(p => p.id === productId);
-                    const maxIndex = product.images.length - 1;
-
-                    let nextIndex;
-                    if (deltaX > 0) { // Swiped Left -> Show Next image
-                        nextIndex = (currentIndex + 1) > maxIndex ? 0 : (currentIndex + 1);
-                    } else { // Swiped Right -> Show Previous image
-                        nextIndex = (currentIndex - 1) < 0 ? maxIndex : (currentIndex - 1);
-                    }
-
-                    switchImage(null, productId, nextIndex);
-
-                } else {
-                    // --- MODAL SWIPE LOGIC ---
-                    if (deltaX > 0) { // Swiped Left -> Show Next image
-                        showNextImage(1);
-                    } else { // Swiped Right -> Show Previous image
-                        showNextImage(-1);
-                    }
-                }
-            }
-            // Reset X coordinates
+            // Reset touch coordinates
             startX = 0;
             endX = 0;
         }
 
-        // --- MODAL (LIGHTBOX) FUNCTIONS ---
-
-        function openImageModal(productId, initialImageIndex) {
+        // Opens the full-screen image modal (lightbox)
+        function openModal(productId, initialIndex = 0) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
-
-            currentProductImageUrls = product.images;
-            currentImageIndex = initialImageIndex;
             
-            modalContent.src = currentProductImageUrls[currentImageIndex];
+            currentProductImageUrls = product.images;
+            currentImageIndex = initialIndex;
+            
+            updateModalImage();
+            
             imageModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling underneath
         }
 
-        function closeImageModal() {
+        // Closes the image modal
+        function closeModal() {
             imageModal.style.display = 'none';
+            document.body.style.overflow = ''; 
         }
 
-        function showNextImage(direction) {
-            let newIndex = currentImageIndex + direction;
-            const maxIndex = currentProductImageUrls.length - 1;
+        // Updates the image in the modal and handles navigation bounds
+        function updateModalImage() {
+            modalContent.src = currentProductImageUrls[currentImageIndex];
+            
+            // Hide/show arrows based on image bounds (optional)
+            modalPrevBtn.style.visibility = currentProductImageUrls.length > 1 ? 'visible' : 'hidden';
+            modalNextBtn.style.visibility = currentProductImageUrls.length > 1 ? 'visible' : 'hidden';
+        }
 
-            if (newIndex > maxIndex) {
-                newIndex = 0; 
-            } else if (newIndex < 0) {
-                newIndex = maxIndex; 
+        // Navigates to the previous image in the modal
+        function navigateModal(direction) {
+            if (currentProductImageUrls.length <= 1) return; 
+
+            let newIndex = currentImageIndex + direction;
+
+            if (newIndex < 0) {
+                newIndex = currentProductImageUrls.length - 1; 
+            } else if (newIndex >= currentProductImageUrls.length) {
+                newIndex = 0;
             }
 
             currentImageIndex = newIndex;
-            modalContent.src = currentProductImageUrls[currentImageIndex];
+            updateModalImage();
         }
 
-        // --- CART/ORDER LIST FUNCTIONS (Unchanged) ---
-        function updateCartDisplay() {
-            cartItemsContainer.innerHTML = '';
-            let itemCount = 0;
+        // --- CART/ORDER LIST LOGIC ---
 
-            if (cart.length === 0) {
-                cartItemsContainer.appendChild(emptyCartMessage.cloneNode(true));
-                cartCountSpan.textContent = '0';
-                return;
-            }
-            
-            if (emptyCartMessage) {
-                const existingEmptyMessage = cartItemsContainer.querySelector('.empty-cart-message');
-                if (existingEmptyMessage) existingEmptyMessage.remove();
-            }
-
-            cart.forEach(item => {
-                const product = products.find(p => p.id === item.id);
-                if (!product) return;
-
-                const cartItemDiv = document.createElement('div');
-                cartItemDiv.className = 'cart-item';
-                cartItemDiv.innerHTML = `
-                    <img src="${product.images[0]}" alt="${product.name}" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <p><strong>${product.name}</strong></p>
-                        <p>Qty: ${item.quantity}</p>
-                    </div>
-                    <button class="remove-item-btn" data-id="${item.id}">Remove</button>
-                `;
-                cartItemsContainer.appendChild(cartItemDiv);
-                itemCount += item.quantity;
-            });
-
-            cartCountSpan.textContent = itemCount;
+        function saveCart() {
+            localStorage.setItem('ammarBrothersCart', JSON.stringify(cart));
+            updateCartUI();
         }
-        
+
         function addToCart(productId) {
+            const productData = products.find(p => p.id === productId);
+            if (!productData) return;
+
             const existingItem = cart.find(item => item.id === productId);
+
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                cart.push({ id: productId, quantity: 1 });
+                cart.push({
+                    id: productId,
+                    name: productData.name,
+                    image: productData.images[0],
+                    quantity: 1
+                });
             }
-            updateCartDisplay();
+            saveCart();
+        }
+
+        function updateCartQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    saveCart();
+                }
+            }
         }
 
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
-            updateCartDisplay();
+            saveCart();
         }
-        
-        function generateWhatsAppMessage() {
+
+        function updateCartUI() {
+            cartCountSpan.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+            cartItemsContainer.innerHTML = '';
+
             if (cart.length === 0) {
-                alert("Your order list is empty. Please add items before ordering.");
+                emptyCartMessage.style.display = 'block';
+                orderWhatsappBtn.disabled = true;
+                orderWhatsappBtn.textContent = 'Order List Empty';
+            } else {
+                emptyCartMessage.style.display = 'none';
+                orderWhatsappBtn.disabled = false;
+                orderWhatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Order on WhatsApp';
+
+                cart.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item';
+                    itemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <p><strong>${item.name}</strong></p>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <button class="quantity-btn" data-id="${item.id}" data-change="-1">-</button>
+                                <span>Qty: ${item.quantity}</span>
+                                <button class="quantity-btn" data-id="${item.id}" data-change="1">+</button>
+                            </div>
+                        </div>
+                        <button class="remove-item-btn" data-id="${item.id}">Remove</button>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                });
+            }
+        }
+
+        function generateWhatsAppOrderLink() {
+            if (cart.length === 0) return;
+
+            let message = "Hello AMMAR & Brothers, I would like to place an order for the following items from your catalog:\n\n";
+            
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} (Qty: ${item.quantity})\n`;
+            });
+
+            message += "\nKindly confirm the total price and availability. Thank you!";
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
+
+        // --- FILTERING AND SEARCH LOGIC ---
+
+        function filterProducts(category) {
+            searchInput.value = ''; // Clear search when filtering by category
+            if (category === 'all') {
+                renderProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+        }
+
+        function searchProducts(query) {
+            const term = query.toLowerCase().trim();
+            if (term === '') {
+                // If search is empty, filter to the currently active category (or all)
+                const activeCategory = document.querySelector('#category-list .active')?.getAttribute('data-category') || 'all';
+                filterProducts(activeCategory);
                 return;
             }
 
-            let message = "Hello AMMAR & Brothers,\n\nI would like to place an order for the following items:\n\n";
-            cart.forEach(item => {
-                const product = products.find(p => p.id === item.id);
-                if (product) {
-                    message += `- ${product.name} (ID: ${item.id}) - Quantity: ${item.quantity}\n`;
+            const searchResults = products.filter(p =>
+                p.name.toLowerCase().includes(term) ||
+                p.category.toLowerCase().includes(term) ||
+                p.description.toLowerCase().includes(term)
+            );
+            renderProducts(searchResults);
+        }
+
+        // --- DARK MODE LOGIC ---
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkModePreference', isDarkMode ? 'dark' : 'light');
+        }
+
+        function loadDarkModePreference() {
+            const preference = localStorage.getItem('darkModePreference');
+            if (preference === 'dark') {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        // --- EVENT LISTENERS ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDarkModePreference();
+            renderProducts();
+            updateCartUI();
+
+            // Click listener for image gallery dots (delegated)
+            productGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('selector-dot')) {
+                    // Handled inside renderProduct/switchImage (but needs to be on product card too)
+                } else if (e.target.classList.contains('product-image')) {
+                    const productId = getProductId(e.target);
+                    const card = e.target.closest('.product-card');
+                    const currentDot = card.querySelector('.selector-dot.active');
+                    let currentIndex = currentDot ? parseInt(currentDot.getAttribute('data-image-index')) : 0;
+                    openModal(productId, currentIndex);
+                } else if (e.target.classList.contains('add-to-cart-btn')) {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    addToCart(productId);
                 }
             });
 
-            message += "\nThank you. Please confirm availability and pricing.";
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_send order message to this number 03366577284 ');
-        }
-
-        // --- EVENT LISTENERS (Centralized) ---
-
-        function attachProductImageClickListeners() {
-            document.querySelectorAll('.product-image').forEach(img => {
-                img.removeEventListener('click', handleImageClick); 
-                img.addEventListener('click', handleImageClick);
+            // Category filter listener
+            categoryList.addEventListener('click', (e) => {
+                if (e.target.tagName === 'LI') {
+                    document.querySelectorAll('#category-list li').forEach(li => li.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const category = e.target.getAttribute('data-category');
+                    filterProducts(category);
+                }
             });
-        }
-        
-        function handleImageClick(e) {
-            e.preventDefault();
-            if (e.target.classList.contains('product-image') && e.target.closest('.product-card')) {
-                const productId = parseInt(e.target.getAttribute('data-product-id'));
-                const productCard = e.target.closest('.product-card');
-                const activeDot = productCard.querySelector('.selector-dot.active');
-                const initialIndex = activeDot ? parseInt(activeDot.getAttribute('data-image-index')) : 0;
-                
-                openImageModal(productId, initialIndex);
-            }
-        }
 
-        // Header Icons and Search Overlay
-        document.getElementById('search-icon').addEventListener('click', () => {
-            document.getElementById('search-overlay').classList.add('active');
-            searchInput.focus();
-        });
+            // Search input listener
+            searchInput.addEventListener('input', () => {
+                searchProducts(searchInput.value);
+            });
 
-        document.querySelector('.search-content .close-btn').addEventListener('click', () => {
-            document.getElementById('search-overlay').classList.remove('active');
-            // Clear search when closing the overlay
-            searchInput.value = ''; 
-            filterProductsBySearch(); 
-        });
-        
-        // --- KEY LISTENER FOR SEARCH INPUT ---
-        searchInput.addEventListener('input', filterProductsBySearch);
-        
-        // Cart Listeners
-        document.getElementById('cart-icon').addEventListener('click', () => {
-            cartOverlay.classList.add('active');
-        });
-        
-        document.getElementById('close-cart').addEventListener('click', () => {
-            cartOverlay.classList.remove('active');
-        });
-        
-        // Modal Listeners
-        closeImageModalBtn.addEventListener('click', closeImageModal);
-        modalPrevBtn.addEventListener('click', () => showNextImage(-1));
-        modalNextBtn.addEventListener('click', () => showNextImage(1));
-        
-        imageModal.addEventListener('click', (e) => {
-             if (e.target.id === 'image-modal') {
-                 closeImageModal();
-             }
-        });
-        
-        // Modal Swipe Listeners
-        modalContent.addEventListener('touchstart', handleTouchStart, false);
-        modalContent.addEventListener('touchmove', handleTouchMove, false);
-        modalContent.addEventListener('touchend', (e) => handleTouchEnd(e, null), false);
+            // Cart and Search Overlay Toggles
+            searchIcon.addEventListener('click', () => searchOverlay.classList.add('active'));
+            document.querySelectorAll('.close-btn[data-target]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.getElementById(e.target.getAttribute('data-target')).classList.remove('active');
+                });
+            });
+            cartIcon.addEventListener('click', () => cartOverlay.classList.add('active'));
+            closeCartBtn.addEventListener('click', () => cartOverlay.classList.remove('active'));
+            cartOverlay.addEventListener('click', (e) => {
+                 if (e.target === cartOverlay) {
+                    cartOverlay.classList.remove('active');
+                }
+            });
 
-        // Category Filter
-        categoryList.addEventListener('click', (e) => {
-            if (e.target.tagName === 'LI') {
-                document.querySelectorAll('#category-list li').forEach(li => li.classList.remove('active'));
-                e.target.classList.add('active');
-                
-                // When a category is clicked, the search input is used to filter that category
-                filterProductsBySearch();
-            }
-        });
-        
-        // Add to Cart Listeners
-        productGrid.addEventListener('click', (e) => {
-            if (e.target.classList.contains('add-to-cart-btn')) {
+
+            // Cart item management listener (delegated)
+            cartItemsContainer.addEventListener('click', (e) => {
                 const productId = parseInt(e.target.getAttribute('data-id'));
-                addToCart(productId);
-            }
-        });
+                if (e.target.classList.contains('remove-item-btn')) {
+                    removeFromCart(productId);
+                } else if (e.target.classList.contains('quantity-btn')) {
+                    const change = parseInt(e.target.getAttribute('data-change'));
+                    updateCartQuantity(productId, change);
+                }
+            });
 
-        // Remove from Cart Listeners
-        cartItemsContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-item-btn')) {
-                const productId = parseInt(e.target.getAttribute('data-id'));
-                removeFromCart(productId);
-            }
-        });
+            // WhatsApp Order Button
+            orderWhatsappBtn.addEventListener('click', generateWhatsAppOrderLink);
+            
+            // Image Modal Listeners
+            closeImageModalBtn.addEventListener('click', closeModal);
+            modalPrevBtn.addEventListener('click', () => navigateModal(-1));
+            modalNextBtn.addEventListener('click', () => navigateModal(1));
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) {
+                    closeModal();
+                }
+            });
 
-        // WhatsApp Order Button
-        document.getElementById('order-whatsapp-btn').addEventListener('click', generateWhatsAppMessage);
-
-
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartDisplay();
+            // DARK MODE TOGGLE LISTENER
+            darkModeToggle.addEventListener('click', toggleDarkMode);
         });
 
     </script>
